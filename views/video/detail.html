@@ -1,0 +1,73 @@
+{% extends '../layouts/primary.html' %}
+
+{% block content %}
+    <section id="eng">
+        {% include "../partials/categories.html" %}
+        <article class="videoDetail">
+            <div class="hd clearfix">
+                <div class="cover" >
+                    <img src="{{$data['pictures']['large'][0]}}" alt="{{$data['title']}}">
+                </div>
+                <div class="attr">
+                    <h1>{{$data['title']}}</h1>
+                    <div class="views">{{$data['playCount']|number}} Views</div>
+                    <div class="btns">
+                        {% if $data['videoEpisodes'] %}
+                        <a href="{{$data['videoEpisodes'][0]['playUrl'][0]}}"
+                            target="_blank" class="btn">Play</a>
+                        {% include "../partials/s-download-btn.html" %}
+                        <a href="{{$data['videoEpisodes'][0]['playUrl'][0]}}"
+                            target="_blank" class="mobile">Play
+                        </a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <div class="bd">
+                <div class="contentInfo"><strong>Description</strong><br>
+                <span>Published on {{$data['createdDate']|timeAgo}}</span></div>
+                <div class="content">
+                    {{$data['description']}}
+                </div>
+            </div>
+        </article>
+
+        <!-- More Popular videos [s] -->
+        <section class="clearfix">
+            <div class="popular-video recommended recommended-list">
+                <div class="hd">
+                    <h4><a href="/popular">More Popular videos</a></h4>
+                </div>
+                <div class="bd">
+                    <ul>
+                        {% for $item in $popular['items'] %}
+                        <li>
+                          <figure class="pic">
+                            <a href="/{{formatURL($item['title'])+'_popular_0_'+$item['id']}}">
+                              <img src="{{$item['pictures']['small'][0]}}" alt="{{$item['title']}}" />
+                            </a>
+                            <span class="time">{{$item['videoEpisodes'][0]['duration']}}</span>
+                            <span class="overlay"></span></a>
+                          </figure>
+                          <p class="title">
+                            <a href="/{{formatURL($item['title'])+'_popular_0_'+$item['id']}}">
+                                {{$item['title']|lessThan(59, '...')}}
+                            </a>
+                          </p>
+                          <p class="info">
+                            {{$item['playCount']|number + ' views '+$item['latestEpisodeDate']|timeAgo}}
+                          </p>
+                          <div class="download-btn for-mobile">
+                              {% include "../partials/s-download-btn.html" %}
+                          </div>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+
+            </div>
+        </section>
+        <!-- More Popular videos [e] -->
+    </section>
+{% endblock %}

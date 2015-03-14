@@ -36,5 +36,39 @@ module.exports = exports = {
                 $top: topData
             });
         });
+    },
+    detail: function(req, res) {
+        // top, popular|list, category
+        var params = req.url.split('_').slice(1);
+        var tmp = {};
+        var action = params[0];
+        var $sitePath = [
+            [_.capitalize(action), '/' + action]
+        ];
+        var $videoId = params[2]; // /.*_(\d*)$/.exec(req.url)[1];
+        if ($videoId) {
+            async.map([
+                API + $videoId,
+                API + 'starter?region=IN&start=0&max=10'
+            ], fetch, function(err, results) {
+                $detailArray = JSON.parse(results[0]);
+                $popularArray = JSON.parse(results[1]);
+                if (action == 'list') {
+                    fetch(API + 'special/detail?id=' + params[1] + '&region=IN&start=0&max=40', function(err, result) {
+                        var $specialsArray = JSON.parse(result);
+                        $sitePath.push([$specialsArray['special']['name'], '/list/' + $specialsArray['special']['id']]);
+                    });
+                    $template = 'listdetail';
+                }
+                $sitePath.push([$detailArray['title'], '.']);
+                res.render('video/detail.html', {
+                    pageTitle: $detailArray['title'],
+                    $sitePath: $sitePath,
+                    $data: $detailArray,
+                    $popular: $popularArray,
+                    categories: categories
+                });
+            });
+        }
     }
 };
