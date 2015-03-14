@@ -1,5 +1,6 @@
 var request = require('request');
 var async = require('async');
+var _ = require('lodash');
 
 var API = 'http://api.snappea.com/v1/video/';
 
@@ -7,6 +8,12 @@ var categories;
 request.get(API + 'categories?hl=id_GZ', function(error, response, body) {
     categories = JSON.parse(body);
 });
+
+var getKeyObj = function(key, val) {
+    var tmp = {};
+    tmp[key] = val;
+    return tmp;
+};
 
 var fetch = function(file, cb) {
     request.get(file, function(err, response, body) {
@@ -34,6 +41,51 @@ module.exports = exports = {
                 categories: categories,
                 $specials: JSON.parse(results[0]),
                 $top: topData
+            });
+        });
+    },
+    categories: function() {
+
+    },
+    category: function() {
+
+    },
+    lists: function() {
+
+    },
+    list: function() {
+
+    },
+    top: function(req, res) {
+        async.map([
+            API + 'toplist/topdownload?region=IN&start=0&max=101'
+        ], fetch, function(err, results) {
+            var topData = JSON.parse(results[0]);
+            topData.items.sort(function(a, b) {
+                return a.weeklyDownloadCount - b.weeklyDownloadCount;
+            });
+            res.render('video/top', {
+                currentPage: 'top',
+                categories: categories,
+                $sitePath: [
+                    ['Top', '/top']
+                ],
+                $top: topData
+            });
+            // check top/detail with sitePath
+        });
+    },
+    popular: function(req, res) {
+        async.map([
+            API + 'starter?region=IN&start=0&max=40'
+        ], fetch, function(err, results) {
+            var $popularArray = JSON.parse(results[0]);
+            res.render('video/index', {
+                currentPage: '',
+                $sitePath: [
+                    ['Popular', '/popular']
+                ],
+                popular: $popularArray
             });
         });
     },

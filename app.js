@@ -3,6 +3,10 @@ var _ = require('lodash');
 var swig = require('swig');
 var app = express();
 
+_.capitalize = function(str) {
+    return str[0].toUpperCase() + str.slice(1);
+};
+
 var timeAgo = require('./helpers/timeAgo');
 
 var videoModule = require('./modules/video');
@@ -14,7 +18,7 @@ app.engine('html', swig.renderFile);
 app.set('view engine', 'html');
 app.set('views', __dirname + '/views');
 
-swig.setFilter('lessThen', function(str, len, sub) {
+swig.setFilter('lessThan', function(str, len, sub) {
     if (str.length > len) {
         return str.slice(0, len) + sub;
     }
@@ -22,7 +26,6 @@ swig.setFilter('lessThen', function(str, len, sub) {
 });
 
 swig.setFilter('timeAgo', function(ts) {
-    console.log(ts);
     try {
         return timeAgo.timeAgo(ts);
     } catch (e) {
@@ -35,6 +38,13 @@ swig.setFilter('number', function(n) {
         return s.split('').reverse().join('');
     }
     return reverse('' + n).match(/.{1,3}/g).reverse().join(',');
+});
+swig.setFilter('formatUrl', function(str) {
+    return str.replace(/"/g, '')
+        .replace(/\?/g, '')
+        .replace(/\s/g, '-')
+        .replace(/#/g, '-')
+        .replace(/_/g, '-');
 });
 
 // Swig will cache templates for you, but you can disable
@@ -58,13 +68,6 @@ app.use(function(req, res, next) {
             if (!req.header) return false;
             var ua = req.header('user-agent');
             return /mobile/i.test(ua);
-        },
-        formatUrl: function(str) {
-            return str.replace('"', '')
-                .replace('?', '')
-                .replace(' ', '-')
-                .replace('#', '-')
-                .replace('_', '-');
         }
     });
     next();
@@ -105,5 +108,8 @@ var options = {
 };
 
 app.use('/static', express.static('static', options));
+app.get('/top', videoModule.top);
+app.get('/popular', videoModule.popular);
+app.get('*', videoModule.detail); // use RegExp
 
 app.listen(3000);
