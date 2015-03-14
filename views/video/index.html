@@ -9,7 +9,7 @@
           <h2>Download YouTube Videos and Music</h2>
           <h2>Easy, fast, and free</h2>
           <!-- Todo -->
-            <a href="{% if checkMobile(_req) %}/downloading{% else %}http://dl-master.snappea.com/installer/snaptube/latest/Click_me_to_install_SnapTube_tube_homepage.apk{% endif %}" onclick="ga('send', 'event', 'snaptube.in', 'snaptube', 'download');" class="btn">Download</a>
+          {% include "../partials/s-download-btn.html" %}
         </div>
       </div>
     </div>
@@ -84,21 +84,21 @@
               {% for $item in $special['items'] %}
               <li>
                 <figure class="pic">
-                  <a href="/{{formatUrl($item.title)+'_list_'+$special['special']['id']+'_'+$item['id']}}">
+                  <a href="/{{$item.title|formatUrl+'_list_'+$special['special']['id']+'_'+$item['id']}}">
                     <img src="{{$item['pictures']['small'][0]}}" alt="{{$item['title']}}" width="196" />
                   </a>
                   <span class="time">{{$item['videoEpisodes'][0]['duration']}}</span>
                 </figure>
                 <p class="title">
-                  <a href="/{{formatUrl($item.title)+'_list_'+$special['special']['id']+'_'+$item['id']}}">
-                    {{$item['title']|lessThen(59, '...')}}
+                  <a href="/{{$item.title|formatUrl+'_list_'+$special['special']['id']+'_'+$item['id']}}">
+                    {{$item['title']|lessThan(59, '...')}}
                   </a>
                 </p>
                 <p class="info">
                   {{$item['playCount']|number+' views '+$item['createdDate']|timeAgo}}
                 </p>
                 <div class="download-btn for-mobile">
-                  <a href="{% if checkMobile(_req) %}/downloading{% else %}http://dl-master.snappea.com/installer/snaptube/latest/Click_me_to_install_SnapTube_tube_homepage.apk{% endif %}" onclick="ga('send', 'event', 'snaptube.in', 'snaptube', 'download');" class="btn">Download</a>
+                  {% include "../partials/s-download-btn.html" %}
                 </div>
               </li>
               {% endfor %}
@@ -119,17 +119,17 @@
             <!-- $key -> loop.key -->
             <li class="clearfix">
               <figure class="pic">
-                <a href="/{{formatURL($item['title'])+'_top_0_'+$item['id']}}">
+                <a href="/{{$item['title']|formatUrl+'_top_0_'+$item['id']}}">
                   <img src="{{$item['pictures']['small'][0]}}" alt="{{$item['title']}}" />
                 </a>
                 <span class="time">{{$item['videoEpisodes'][0]['duration']}}</span>
               </figure>
               <div class="desc">
-                <h4 class="title"><a href="/{{formatURL($item['title'])+'_top_0_'+$item['id']}}">
+                <h4 class="title"><a href="/{{$item['title']|formatUrl+'_top_0_'+$item['id']}}">
                   <i>{{loop.index}}.</i>{{$item['title']}}</a></h4>
                 <p class="info">{{$item['weeklyDownloadCount']}} Download</p>
                 <div class="download-btn for-mobile">
-                  <a href="{% if checkMobile(_req) %}/downloading{% else %}http://dl-master.snappea.com/installer/snaptube/latest/Click_me_to_install_SnapTube_tube_homepage.apk{% endif %}" onclick="ga('send', 'event', 'snaptube.in', 'snaptube', 'download');" class="btn">Download</a>
+                  {% include "../partials/s-download-btn.html" %}
                 </div>
               </div>
             </li>
@@ -176,6 +176,8 @@
   <section id="engagement" class="for-web">
     <h2>Now start using SnapTube</h2>
     <!-- Todo -->
-    <p><a href="{% if checkMobile(_req) %}/downloading{% else %}http://dl-master.snappea.com/installer/snaptube/latest/Click_me_to_install_SnapTube_tube_homepage.apk{% endif %}" onclick="ga('send', 'event', 'snaptube.in', 'snaptube', 'download');" class="btn">Download</a></p>
+    <p>
+      {% include "../partials/s-download-btn.html" %}
+    </p>
   </section>
 {% endblock %}
