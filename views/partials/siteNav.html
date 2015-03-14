@@ -1,0 +1,22 @@
+<div class="mask for-mobile hide"></div>
+<div class="site-nav for-mobile">
+    <a href="#" class="toggle-nav"><b class="menu-icon"></b></a>
+    <nav class="main-nav nav-list " role="navigation">
+      <ul>
+        <li><a href="/">Homepage</a></li>
+        <li class="category">
+            <a href="/category">categories</a>
+            <!--div class="sub hide">
+            {% for item in categories %}
+            <a href="/category/{{item.alias}}">{{item.alias}}</a>
+            {% endfor %}
+            </div-->
+        </li>
+        {% for i in ['list', 'top'] %}
+        <li {% if currentPage == i %}class="active"{% endif %}>
+            <a href="/{{i}}">{{i|title}}</a>
+        </li>
+        {% endfor %}
+      </ul>
+    </nav>
+</div>
