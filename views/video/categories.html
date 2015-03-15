@@ -8,24 +8,16 @@
             <h3>Categories</h3>
             {% for $category in $categoryArray %}
             <div class="hd">
-                <h4><a href="/category/{{$category.name}}">{{$category.name}}</a></h4>
+                <h4>
+                    <a href="/category/{{$category.name}}">{{$category.name}}</a>
+                </h4>
                 <a href="/category/{{$category.name}}" class="more">More>></a>
             </div>
             <div class="bd">
                 <ul>
+                    {% set itemUrlSep = "_category_"+$category.name+"_" %}
                     {% for $item in $category['videos'] %}
-                    <li>
-                        <figure class="pic">
-                            <a href="/<?php echo $this->formatURL($item['title']) . '_category_0_' . $item['id'] ; ?>"><img src="<?php echo $item['pictures']['small'][0]; ?>" alt="<?php echo $item['title']; ?>" />
-                            <span class="time"><?php if(count($item['videoEpisodes'])) echo $item['videoEpisodes'][0]['duration']; ?></span>
-                            <span class="overlay"></span></a>
-                        </figure>
-                        <p class="title"><a href="/<?php echo $this->formatURL($item['title']) . '_category_0_' . $item['id'] ; ?>"><?php echo strlen($item['title']) > 59 ? substr($item['title'],0,59) . '...': $item['title'] ; ?></a></p>
-                        <p class="info"><?php echo number_format($item['playCount']); ?> views</p>
-                        <div class="download-btn for-mobile">
-                            <a href="<?php if($this->check_mobile()){ echo '/downloading'; }else{ echo 'http://dl-master.snappea.com/installer/snaptube/latest/Click_me_to_install_SnapTube_tube_homepage.apk';}?>" onclick="ga('send', 'event', 'snaptube.in', 'snaptube', 'download');" class="btn">Download</a>
-                        </div>
-                    </li>
+                    {% include "../partials/s-video-item.html" with $item %}
                     {% endfor %}
                 </ul>
             </div>

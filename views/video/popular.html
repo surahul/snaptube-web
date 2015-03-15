@@ -5,11 +5,11 @@
     {% include "../partials/categories.html" %}
     <section id="recommended" class="clearfix">
         <div class="recommended recommended-list recommende-listdetail">
-            <h3>{{$list['special']['name']}}</h3>
+            <h3>Popular Videos</h3>
             <div class="bd">
                 <ul>
-                    {% set itemUrlSep = "_list_"+$list['special']['id']+"_" %}
-                    {% for $item in $list['items'] %}
+                    {% set itemUrlSep = "_popular_0_" %}
+                    {% for $item in $popular['items'] %}
                     {% include "../partials/s-video-item.html" with $item %}
                     {% endfor %}
                 </ul>
@@ -18,4 +18,3 @@
     </section>
 </section>
 {% endblock %}
-

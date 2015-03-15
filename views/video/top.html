@@ -7,26 +7,9 @@
         <div class="top-weekly top-weekly-list">
             <h3>Top Weekly Download</h3>
             <ul class="clearfix">
+                {% set itemUrlSep = "_top_0_" %}
                 {% for $item in $top['items'] %}
-                <li>
-                    <figure class="pic">
-                        <a href="{{$item['title']|formatUrl+'_top_0_'+$item['id']}}">
-                            <img src="{{$item['pictures']['small'][0]}}" alt="{{$item['title']}}">
-                            <span class="time">{{$item['videoEpisodes'][0]['duration']}}</span>
-                        </a>
-                    </figure>
-                    <div class="desc">
-                        <h4 class="title">
-                            <a href="{{$item['title']|formatUrl+'_top_0_'+$item['id']}}">
-                                <i>{{loop.index}}</i>
-                                {{$item['title']|lessThan('56', '...')}}
-                            </a>
-                        </h4>
-                        <p class="info">
-                            {{$item['weeklyDownloadCount']|number}} Downloads {{$item['latestEpisodeDate']|timeAgo}}
-                        </p>
-                    </div>
-                </li>
+                {% include "../partials/s-video-item.html" with $item %}
                 {% endfor %}
             </ul>
         </div>

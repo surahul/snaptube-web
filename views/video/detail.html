@@ -41,27 +41,9 @@
                 </div>
                 <div class="bd">
                     <ul>
+                        {% set itemUrlSep = "_popular_0_" %}
                         {% for $item in $popular['items'] %}
-                        <li>
-                          <figure class="pic">
-                            <a href="/{{formatURL($item['title'])+'_popular_0_'+$item['id']}}">
-                              <img src="{{$item['pictures']['small'][0]}}" alt="{{$item['title']}}" />
-                            </a>
-                            <span class="time">{{$item['videoEpisodes'][0]['duration']}}</span>
-                            <span class="overlay"></span></a>
-                          </figure>
-                          <p class="title">
-                            <a href="/{{formatURL($item['title'])+'_popular_0_'+$item['id']}}">
-                                {{$item['title']|lessThan(59, '...')}}
-                            </a>
-                          </p>
-                          <p class="info">
-                            {{$item['playCount']|number + ' views '+$item['latestEpisodeDate']|timeAgo}}
-                          </p>
-                          <div class="download-btn for-mobile">
-                              {% include "../partials/s-download-btn.html" %}
-                          </div>
-                        </li>
+                        {% include "../partials/s-video-item.html" with $item %}
                         {% endfor %}
                     </ul>
                 </div>

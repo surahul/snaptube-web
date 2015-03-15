@@ -140,16 +140,26 @@ module.exports = exports = {
             API + 'starter?region=IN&start=0&max=40'
         ], fetch, function(err, results) {
             var $popularArray = JSON.parse(results[0]);
-            res.render('video/index', {
+            res.render('video/popular', {
                 currentPage: '',
                 $sitePath: [
                     ['Popular', '/popular']
                 ],
-                popular: $popularArray
+                $popular: $popularArray
             });
         });
     },
     detail: function(req, res) {
+        function render() {
+            $sitePath.push([$detailArray['title'], req.url]);
+            res.render('video/detail.html', {
+                pageTitle: $detailArray['title'],
+                $sitePath: $sitePath,
+                $data: $detailArray,
+                $popular: $popularArray,
+                categories: categories
+            });
+        }
         // top, popular|list, category
         var params = req.url.split('_').slice(1);
         var tmp = {};
@@ -169,17 +179,14 @@ module.exports = exports = {
                     fetch(API + 'special/detail?id=' + params[1] + '&region=IN&start=0&max=40', function(err, result) {
                         var $specialsArray = JSON.parse(result);
                         $sitePath.push([$specialsArray['special']['name'], '/list/' + $specialsArray['special']['id']]);
+                        render();
                     });
-                    $template = 'listdetail';
+                } else if (action == 'category') {
+                    $sitePath.push([params[1], '/category/' + params[1]]);
+                    render();
+                } else {
+                    render();
                 }
-                $sitePath.push([$detailArray['title'], '.']);
-                res.render('video/detail.html', {
-                    pageTitle: $detailArray['title'],
-                    $sitePath: $sitePath,
-                    $data: $detailArray,
-                    $popular: $popularArray,
-                    categories: categories
-                });
             });
         }
     }

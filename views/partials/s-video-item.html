@@ -1,0 +1,19 @@
+<li>
+    <figure class="pic">
+        <a href="/{{$item['title']|formatUrl+itemUrlSep+$item['id']}}">
+            <img src="{{$item['pictures']['small'][0]}}" alt="{{$item['title']}}">
+            <span class="time">{{$item['videoEpisodes'][0]['duration']}}</span>
+        </a>
+    </figure>
+    <div class="desc">
+        <h4 class="title">
+            <a href="/{{$item['title']|formatUrl+itemUrlSep+$item['id']}}">
+                <i>{{loop.index}}</i>
+                {{$item['title']|lessThan('56', '...')}}
+            </a>
+        </h4>
+        <p class="info">
+            {{$item['weeklyDownloadCount']|number}} Downloads {{$item['latestEpisodeDate']|timeAgo}}
+        </p>
+    </div>
+</li>

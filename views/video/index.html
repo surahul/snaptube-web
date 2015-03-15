@@ -81,26 +81,9 @@
           </div>
           <div class="bd">
             <ul>
+              {% set itemUrlSep = "_list_"+$special['special']['id']+"_" %}
               {% for $item in $special['items'] %}
-              <li>
-                <figure class="pic">
-                  <a href="/{{$item.title|formatUrl+'_list_'+$special['special']['id']+'_'+$item['id']}}">
-                    <img src="{{$item['pictures']['small'][0]}}" alt="{{$item['title']}}" width="196" />
-                  </a>
-                  <span class="time">{{$item['videoEpisodes'][0]['duration']}}</span>
-                </figure>
-                <p class="title">
-                  <a href="/{{$item.title|formatUrl+'_list_'+$special['special']['id']+'_'+$item['id']}}">
-                    {{$item['title']|lessThan(59, '...')}}
-                  </a>
-                </p>
-                <p class="info">
-                  {{$item['playCount']|number+' views '+$item['createdDate']|timeAgo}}
-                </p>
-                <div class="download-btn for-mobile">
-                  {% include "../partials/s-download-btn.html" %}
-                </div>
-              </li>
+              {% include "../partials/s-video-item.html" with $item %}
               {% endfor %}
             </ul>
           </div>
@@ -115,24 +98,9 @@
         <div class="top-weekly">
           <h3>Top downloads</h3>
           <ul class="clearfix">
+            {% set itemUrlSep = "_top_0_" %}
             {% for $item in $top['items'] %}
-            <!-- $key -> loop.key -->
-            <li class="clearfix">
-              <figure class="pic">
-                <a href="/{{$item['title']|formatUrl+'_top_0_'+$item['id']}}">
-                  <img src="{{$item['pictures']['small'][0]}}" alt="{{$item['title']}}" />
-                </a>
-                <span class="time">{{$item['videoEpisodes'][0]['duration']}}</span>
-              </figure>
-              <div class="desc">
-                <h4 class="title"><a href="/{{$item['title']|formatUrl+'_top_0_'+$item['id']}}">
-                  <i>{{loop.index}}.</i>{{$item['title']}}</a></h4>
-                <p class="info">{{$item['weeklyDownloadCount']}} Download</p>
-                <div class="download-btn for-mobile">
-                  {% include "../partials/s-download-btn.html" %}
-                </div>
-              </div>
-            </li>
+            {% include "../partials/s-video-item.html" with $item %}
             {% endfor %}
           </ul>
           <div class="more"><a href="/top">More&gt;&gt;</a></div>
