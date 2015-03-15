@@ -2,6 +2,12 @@ var express = require('express');
 var _ = require('lodash');
 var swig = require('swig');
 var app = express();
+var assetmanager = require('assetmanager');
+// Import your asset file
+var assets = assetmanager.process({
+    assets: require('./assets.json'),
+    debug: (process.env.NODE_ENV !== 'production')
+});
 
 _.capitalize = function(str) {
     return str[0].toUpperCase() + str.slice(1);
@@ -35,6 +41,7 @@ app.use(function(req, res, next) {
 
     // Todo: switch by url
     _.extend(res.locals, {
+        assets: assets,
         _req: req,
         _locals: req.locals,
         $keywords: 'keyword sss',

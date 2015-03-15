@@ -6,8 +6,9 @@
     <link rel="publisher" href="https://plus.google.com/+SnaptubeInvideos" />
     <link rel="shortcut icon" href="/static/images/favicon2.ico" type="image/x-icon">
     <link rel="icon" href="/static/images/favicon2.ico" type="image/x-icon">
-    <link rel="stylesheet" type="text/css" href="/static/css/reset.css">
-    <link rel="stylesheet" type="text/css" href="/static/css/snaptube.css">
+    {% for file in assets.main.css %}
+        <link rel="stylesheet" href="{{file}}">
+    {% endfor %}
     <script>window.html5 = { 'shivCSS': false };</script>
   </head>
   <body class="snaptube">
@@ -64,9 +65,9 @@
       ga('create', 'UA-58716663-1', 'auto');
       ga('send', 'pageview');
     </script>
-    <script type="text/javascript" src="/static/js/zepto.min.js"></script>
-    <script type="text/javascript" src="/static/js/touch.js"></script>
-    <script type="text/javascript" src="/static/js/snaptube.js"></script>
+    {% for file in assets.main.js %}
+        <script type="text/javascript" src="{{file}}"></script>
+    {% endfor %}
     {% block primary-script %}{% endblock %}
   </body>
 </html>
