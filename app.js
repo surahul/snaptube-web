@@ -73,21 +73,6 @@ app.use(function(req, res, next) {
     next();
 });
 
-app.get('/', videoModule.index);
-/*app.get('/', function(req, res) {
-    res.render('index', {
-
-    });
-});*/
-
-app.get('/jade', function(req, res) {
-    res.render('index', {
-        title: 'Heyx',
-        message: 'Hello there!',
-        pets: ['cat', 'dog']
-    });
-});
-
 // serve pages view
 _.each(['about', 'faq', 'contact', 'installation-guide', 'privacy', 'terms'], function(page) {
     app.get('/' + page, function(req, res) {
@@ -109,10 +94,14 @@ var options = {
 };
 
 app.use('/static', express.static('static', options));
+
+app.get('/', videoModule.index);
 app.get('/top', videoModule.top);
 app.get('/popular', videoModule.popular);
 app.get('/list', videoModule.lists);
 app.get('/list/:id', videoModule.list);
+app.get('/category', videoModule.categories);
+app.get('/category/:alias', videoModule.category);
 app.get('*', videoModule.detail); // use RegExp
 
 app.listen(3000);

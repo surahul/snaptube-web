@@ -44,11 +44,41 @@ module.exports = exports = {
             });
         });
     },
-    categories: function() {
-
+    categories: function(req, res) {
+        var $videosArray = [];
+        async.map(_.map(categories, function(cate) {
+            return API + '?category=' + cate.alias + '&region=IN&start=0&max=5';
+        }), fetch, function(error, results) {
+            $videosArray = _.map(results, function(i, idx) {
+                var tmp = JSON.parse(i);
+                tmp.name = categories[idx].name;
+                return tmp;
+            });
+            res.render('video/categories', {
+                currentPage: 'categories',
+                categories: categories,
+                $sitePath: [
+                    ['Categories', '/category']
+                ],
+                $categoryArray: $videosArray
+            });
+        });
     },
-    category: function() {
-
+    category: function(req, res) {
+        var $alias = req.params.alias;
+        fetch(API + '?category=' + $alias + '&region=IN&start=0&max=40', function(err, result) {
+            $list = JSON.parse(result);
+            res.render('video/category', {
+                currentPage: 'category',
+                categories: categories,
+                $alias: $alias,
+                $list: $list,
+                $sitePath: [
+                    ['Categories', '/category'],
+                    [$alias, '/' + $alias]
+                ]
+            });
+        });
     },
     lists: function(req, res) {
         fetch(API + 'specials/rich?region=IN&videoCount=5&start=0&max=8', function(err, result) {
