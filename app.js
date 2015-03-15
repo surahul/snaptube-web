@@ -6,9 +6,7 @@ var app = express();
 _.capitalize = function(str) {
     return str[0].toUpperCase() + str.slice(1);
 };
-
-var timeAgo = require('./helpers/timeAgo');
-
+require('./helpers/swig-extend.js');
 var videoModule = require('./modules/video');
 
 // app.set('view engine', 'jade');
@@ -17,35 +15,6 @@ app.engine('html', swig.renderFile);
 
 app.set('view engine', 'html');
 app.set('views', __dirname + '/views');
-
-swig.setFilter('lessThan', function(str, len, sub) {
-    if (str.length > len) {
-        return str.slice(0, len) + sub;
-    }
-    return str;
-});
-
-swig.setFilter('timeAgo', function(ts) {
-    try {
-        return timeAgo.timeAgo(ts);
-    } catch (e) {
-        console.log(e);
-        return 'now'
-    }
-});
-swig.setFilter('number', function(n) {
-    function reverse(s) {
-        return s.split('').reverse().join('');
-    }
-    return reverse('' + n).match(/.{1,3}/g).reverse().join(',');
-});
-swig.setFilter('formatUrl', function(str) {
-    return str.replace(/"/g, '')
-        .replace(/\?/g, '')
-        .replace(/\s/g, '-')
-        .replace(/#/g, '-')
-        .replace(/_/g, '-');
-});
 
 // Swig will cache templates for you, but you can disable
 // that and use Express's caching instead, if you like:
@@ -58,6 +27,10 @@ swig.setDefaults({
 // Don't leave both of these to `false` in production!
 
 app.use(function(req, res, next) {
+    console.log(req.url);
+    if (req.url.indexOf('spf=navigate') > -1) {
+        req.spf = true;
+    }
     // Todo: switch by url
     _.extend(res.locals, {
         _req: req,
