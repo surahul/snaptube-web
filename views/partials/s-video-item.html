@@ -12,8 +12,14 @@
                 {{$item['title']|lessThan('56', '...')}}
             </a>
         </h4>
+        {% if itemUrlSep == '_top_0_' %}
         <p class="info">
             {{$item['weeklyDownloadCount']|number}} Downloads {{$item['latestEpisodeDate']|timeAgo}}
         </p>
+        {% else %}
+        <p class="info">
+            {{$item['playCount']|number}} Views {{$item['latestEpisodeDate']|timeAgo}}
+        </p>
+        {% endif %}
     </div>
 </li>

@@ -36,7 +36,7 @@ module.exports = exports = {
             API + 'toplist/topdownload?region=IN&start=0&max=10'
         ], fetch, function(err, results) {
             var topData = JSON.parse(results[1]);
-            topData.items.sort(function(a, b) {
+            topData.items.sort(function(b, a) {
                 return a.weeklyDownloadCount - b.weeklyDownloadCount;
             });
             res.render('video/index', {
@@ -87,7 +87,7 @@ module.exports = exports = {
         fetch(API + 'specials/rich?region=IN&videoCount=5&start=0&max=8', function(err, result) {
             var $specialsArray = JSON.parse(result);
             _.each($specialsArray, function($special, idx) {
-                $special.items.sort(function(a, b) {
+                $special.items.sort(function(b, a) {
                     return a.latestEpisodeDate - b.latestEpisodeDate;
                 });
             });
@@ -105,11 +105,11 @@ module.exports = exports = {
         var id = req.params.id;
         fetch(API + 'special/detail?id=' + id + '&region=IN&start=0&max=40', function(err, result) {
             $specialsArray = JSON.parse(result);
-            $specialsArray.items.sort(function(a, b) {
+            $specialsArray.items.sort(function(b, a) {
                 return a.latestEpisodeDate - b.latestEpisodeDate;
             });
             res.render('video/list', {
-                currentPage: 'lists',
+                currentPage: 'list',
                 categories: categories,
                 $sitePath: [
                     ['List', '/list'],
@@ -124,7 +124,7 @@ module.exports = exports = {
             API + 'toplist/topdownload?region=IN&start=0&max=101'
         ], fetch, function(err, results) {
             var topData = JSON.parse(results[0]);
-            topData.items.sort(function(a, b) {
+            topData.items.sort(function(b, a) {
                 return a.weeklyDownloadCount - b.weeklyDownloadCount;
             });
             res.render('video/top', {
@@ -144,7 +144,7 @@ module.exports = exports = {
         ], fetch, function(err, results) {
             var $popularArray = JSON.parse(results[0]);
             res.render('video/popular', {
-                currentPage: '',
+                currentPage: 'popular',
                 $sitePath: [
                     ['Popular', '/popular']
                 ],
@@ -160,6 +160,7 @@ module.exports = exports = {
         function render() {
             $sitePath.push([$detailArray['title'], req.url]);
             res.render('video/detail.html', {
+                currentPage: 'detail',
                 title: $detailArray['title'],
                 $sitePath: $sitePath,
                 $data: $detailArray,
