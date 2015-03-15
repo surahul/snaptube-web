@@ -89,8 +89,9 @@ app.get('/jade', function(req, res) {
 });
 
 // serve pages view
-_.each(['about', 'contact', 'installationguide', 'privacy', 'terms'], function(page) {
+_.each(['about', 'faq', 'contact', 'installation-guide', 'privacy', 'terms'], function(page) {
     app.get('/' + page, function(req, res) {
+        res.locals.currentPage = page;
         res.render('pages/' + page);
     });
 });
