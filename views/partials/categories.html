@@ -20,12 +20,4 @@
 </nav>
 <!-- List Navigation [e] -->
 
-<!-- Quick Link [s] -->
-<div class="quick-link">
-    <a href="/">Homepage</a>
-    {% for $link in $sitePath %}
-    <span>&gt;</span>
-    <a href="{{$link[1]}}" {% if not loop.last %}class="current"{% endif %}>{{$link[0]}}</a>
-    {% endfor %}
-</div>
-<!-- Quick Link [e] -->
+{% include "quick-link.html" %}
