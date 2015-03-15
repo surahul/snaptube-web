@@ -102,6 +102,10 @@ app.get('/list', videoModule.lists);
 app.get('/list/:id', videoModule.list);
 app.get('/category', videoModule.categories);
 app.get('/category/:alias', videoModule.category);
+app.get('/downloading', videoModule.downloading);
 app.get('*', videoModule.detail); // use RegExp
+app.use(function(err, req, res, next) {
+    res.render('404.html');
+});
 
 app.listen(3000);

@@ -189,5 +189,11 @@ module.exports = exports = {
                 }
             });
         }
+    },
+    downloading: function(req, res) {
+        res.render('video/downloading', {
+            currentPage: 'downloading',
+            $sitePath: []
+        });
     }
 };
