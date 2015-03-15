@@ -1,6 +1,7 @@
 var request = require('request');
 var async = require('async');
 var _ = require('lodash');
+var swig = require('swig');
 
 var API = 'http://api.snappea.com/v1/video/';
 
@@ -8,6 +9,8 @@ var categories;
 request.get(API + 'categories?hl=id_GZ', function(error, response, body) {
     categories = JSON.parse(body);
 });
+var quickLinkTplFn = swig.compileFile('views/partials/quick-link.html');
+var detailTplFn = swig.compileFile('views/partials/s-video-detail.html');
 
 var getKeyObj = function(key, val) {
     var tmp = {};
@@ -150,10 +153,14 @@ module.exports = exports = {
         });
     },
     detail: function(req, res) {
+        if (req.spf) {
+            return exports.detailSPF(req, res);
+        }
+
         function render() {
             $sitePath.push([$detailArray['title'], req.url]);
             res.render('video/detail.html', {
-                pageTitle: $detailArray['title'],
+                title: $detailArray['title'],
                 $sitePath: $sitePath,
                 $data: $detailArray,
                 $popular: $popularArray,
@@ -162,7 +169,6 @@ module.exports = exports = {
         }
         // top, popular|list, category
         var params = req.url.split('_').slice(1);
-        var tmp = {};
         var action = params[0];
         var $sitePath = [
             [_.capitalize(action), '/' + action]
@@ -189,6 +195,48 @@ module.exports = exports = {
                 }
             });
         }
+    },
+    detailSPF: function(req, res) {
+        function render() {
+            $sitePath.push([$detailArray['title'], req.url]);
+            res.json({
+                title: $detailArray['title'],
+                body: {
+                    'quick-link': quickLinkTplFn({
+                        $sitePath: $sitePath
+                    }),
+                    'video-detail': detailTplFn({
+                        $data: $detailArray
+                    })
+                }
+            });
+        }
+        var params = req.url.split('_').slice(1);
+        var action = params[0];
+        var $sitePath = [
+            [_.capitalize(action), '/' + action]
+        ];
+        var $videoId = params[2]; // /.*_(\d*)$/.exec(req.url)[1];
+        if ($videoId) {
+            async.map([
+                API + $videoId,
+            ], fetch, function(err, results) {
+                $detailArray = JSON.parse(results[0]);
+                if (action == 'list') {
+                    fetch(API + 'special/detail?id=' + params[1] + '&region=IN&start=0&max=40', function(err, result) {
+                        var $specialsArray = JSON.parse(result);
+                        $sitePath.push([$specialsArray['special']['name'], '/list/' + $specialsArray['special']['id']]);
+                        render();
+                    });
+                } else if (action == 'category') {
+                    $sitePath.push([params[1], '/category/' + params[1]]);
+                    render();
+                } else {
+                    render();
+                }
+            });
+        }
+
     },
     downloading: function(req, res) {
         res.render('video/downloading', {
