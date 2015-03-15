@@ -8,6 +8,7 @@ _.capitalize = function(str) {
 };
 require('./helpers/swig-extend.js');
 var videoModule = require('./modules/video');
+var seoModule = require('./modules/seo');
 
 // app.set('view engine', 'jade');
 // This is where all the magic happens!
@@ -27,20 +28,24 @@ swig.setDefaults({
 // Don't leave both of these to `false` in production!
 
 app.use(function(req, res, next) {
-    console.log(req.url);
+    // console.log(req.url);
     if (req.url.indexOf('spf=navigate') > -1) {
         req.spf = true;
     }
+
     // Todo: switch by url
     _.extend(res.locals, {
         _req: req,
-        $title: 'Siva',
+        _locals: req.locals,
         $keywords: 'keyword sss',
         $description: req.url,
         checkMobile: function(req) {
             if (!req.header) return false;
             var ua = req.header('user-agent');
             return /mobile/i.test(ua);
+        },
+        getMeta: function(page, alias) {
+            return seoModule.getMeta(page, alias);
         }
     });
     next();
@@ -55,11 +60,16 @@ _.each(pageList, function(page) {
     app.get('/' + page, function(req, res) {
         res.locals.currentPage = page;
         var titleMap = {
-            'about': 'Best Youtube Downloader for Android'
+            'about': 'Best Youtube Downloader for Android',
+            'faq': 'High Resolution Mobile Videos Download',
+            'contact': 'SnapTube Contact Us',
+            'installation-guide': 'Youtube Downloader for Android : Step By Step',
+            'privacy': 'SnapTube Privacy',
+            'terms': 'SnapTube Terms'
         };
         if (req.spf) {
             return res.json({
-                title: 'from spf',
+                title: titleMap[page],
                 body: {
                     'page-terms': tpl
                 }
@@ -67,7 +77,7 @@ _.each(pageList, function(page) {
         } else {
             res.send(swig.render(pageWrapTpl.replace('###PLACEHOLDER###', tpl), {
                 locals: {
-                    title: ''
+                    $title: titleMap[page]
                 },
                 filename: 'views/pages/' + page + '.html' // MAKE include/extend/import work
             }));

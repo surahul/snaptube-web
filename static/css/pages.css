@@ -28,6 +28,7 @@ p {
     height: 38px;
     margin: 13.5px 10px 0 0;
 }
+.terms img{width:33%;}
 @media only screen and (max-width: 760px) {
     .topnav{
         width:65%;
@@ -57,4 +58,5 @@ p {
         width: 90px;
         height: 24px;
     }
+    .terms img{width:100%;}
 }
