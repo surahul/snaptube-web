@@ -1,0 +1,31 @@
+{% extends '../layouts/primary.html' %}
+
+{% block content %}
+<section id="eng">
+    {% include "../partials/categories.html" %}
+    <section id="recommended" class="clearfix">
+        <div class="recommended recommended-list recommende-listdetail">
+            <h3>{{$list['special']['name']}}</h3>
+            <div class="bd">
+                <ul>
+                    {% for $item in $list['items'] %}
+                    <li>
+                        <figure class="pic">
+                            <a href="/<?php echo $this->formatURL($item['title']) . '_list_' . $list['special']['id'] . '_' . $item['id'] ;?>"><img src="<?php echo $item['pictures']['small'][0]; ?>" alt="<?php echo $item['title']; ?>" />
+                            <span class="time"><?php echo $item['videoEpisodes'][0]['duration']; ?></span>
+                            </a>
+                        </figure>
+                        <p class="title"><a href="/<?php echo $this->formatURL($item['title']) . '_list_' . $list['special']['id'] . '_' . $item['id'] ;?>"><?php echo strlen($item['title']) > 59 ? substr($item['title'],0,59) . '...': $item['title'] ; ?></a></p>
+                        <p class="info"><?php echo number_format($item['playCount']); ?> views <?php echo $this->formatDate($item['latestEpisodeDate']); ?></p>
+                        <div class="download-btn for-mobile">
+                            <a href="<?php if($this->check_mobile()){ echo '/downloading'; }else{ echo 'http://dl-master.snappea.com/installer/snaptube/latest/Click_me_to_install_SnapTube_tube_homepage.apk';}?>" onclick="ga('send', 'event', 'snaptube.in', 'snaptube', 'download');" class="btn">Download</a>
+                        </div>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </section>
+</section>
+{% endblock %}
+

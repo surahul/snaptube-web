@@ -50,11 +50,41 @@ module.exports = exports = {
     category: function() {
 
     },
-    lists: function() {
-
+    lists: function(req, res) {
+        fetch(API + 'specials/rich?region=IN&videoCount=5&start=0&max=8', function(err, result) {
+            var $specialsArray = JSON.parse(result);
+            _.each($specialsArray, function($special, idx) {
+                $special.items.sort(function(a, b) {
+                    return a.latestEpisodeDate - b.latestEpisodeDate;
+                });
+            });
+            res.render('video/lists', {
+                currentPage: 'lists',
+                categories: categories,
+                $sitePath: [
+                    ['List', '/list']
+                ],
+                $list: $specialsArray
+            });
+        });
     },
-    list: function() {
-
+    list: function(req, res) {
+        var id = req.params.id;
+        fetch(API + 'special/detail?id=' + id + '&region=IN&start=0&max=40', function(err, result) {
+            $specialsArray = JSON.parse(result);
+            $specialsArray.items.sort(function(a, b) {
+                return a.latestEpisodeDate - b.latestEpisodeDate;
+            });
+            res.render('video/list', {
+                currentPage: 'lists',
+                categories: categories,
+                $sitePath: [
+                    ['List', '/list'],
+                    [$specialsArray.special.name, '/list/' + id]
+                ],
+                $list: $specialsArray
+            });
+        });
     },
     top: function(req, res) {
         async.map([

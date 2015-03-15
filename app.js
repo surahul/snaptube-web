@@ -111,6 +111,8 @@ var options = {
 app.use('/static', express.static('static', options));
 app.get('/top', videoModule.top);
 app.get('/popular', videoModule.popular);
+app.get('/list', videoModule.lists);
+app.get('/list/:id', videoModule.list);
 app.get('*', videoModule.detail); // use RegExp
 
 app.listen(3000);
