@@ -46,11 +46,32 @@ app.use(function(req, res, next) {
     next();
 });
 
+var fs = require('fs');
+var pageWrapTpl = fs.readFileSync('views/pages/_wrap.html', 'utf8');
+var pageList = ['about', 'faq', 'contact', 'installation-guide', 'privacy', 'terms'];
 // serve pages view
-_.each(['about', 'faq', 'contact', 'installation-guide', 'privacy', 'terms'], function(page) {
+_.each(pageList, function(page) {
+    var tpl = fs.readFileSync('views/pages/' + page + '.html', 'utf8');
     app.get('/' + page, function(req, res) {
         res.locals.currentPage = page;
-        res.render('pages/' + page);
+        var titleMap = {
+            'about': 'Best Youtube Downloader for Android'
+        };
+        if (req.spf) {
+            return res.json({
+                title: 'from spf',
+                body: {
+                    'page-terms': tpl
+                }
+            });
+        } else {
+            res.send(swig.render(pageWrapTpl.replace('###PLACEHOLDER###', tpl), {
+                locals: {
+                    title: ''
+                },
+                filename: 'views/pages/' + page + '.html' // MAKE include/extend/import work
+            }));
+        }
     });
 });
 
