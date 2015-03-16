@@ -1,16 +1,16 @@
 {
     "main": {
         "css": {
-            "/static/build/main.min.css": [
-                "/static/css/reset.css",
-                "/static/css/snaptube.css"
+            "static/build/main.min.css": [
+                "static/css/reset.css",
+                "static/css/snaptube.css"
             ]
         },
         "js": {
-            "/static/build/main.min.js": [
-                "/static/js/zepto.min.js",
-                "/static/js/touch.js",
-                "/static/js/snaptube.js"
+            "static/build/main.min.js": [
+                "static/js/zepto.min.js",
+                "static/js/touch.js",
+                "static/js/snaptube.js"
             ]
         }
     }

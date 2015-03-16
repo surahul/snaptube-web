@@ -2,7 +2,9 @@
     <figure class="pic">
         <a href="/{{$item['title']|formatUrl+itemUrlSep+$item['id']}}">
             <img src="{{$item['pictures']['small'][0]}}" alt="{{$item['title']}}">
-            <span class="time">{{$item['videoEpisodes'][0]['duration']}}</span>
+            <span class="time">
+                {{$item|safeVar("obj['videoEpisodes'][0]['duration']")}}
+            </span>
         </a>
     </figure>
     <div class="desc">

@@ -7,7 +7,7 @@
     <link rel="shortcut icon" href="/static/images/favicon2.ico" type="image/x-icon">
     <link rel="icon" href="/static/images/favicon2.ico" type="image/x-icon">
     {% for file in assets.main.css %}
-        <link rel="stylesheet" href="{{file}}">
+        <link rel="stylesheet" href="/{{file}}">
     {% endfor %}
     <script>window.html5 = { 'shivCSS': false };</script>
   </head>
@@ -66,7 +66,7 @@
       ga('send', 'pageview');
     </script>
     {% for file in assets.main.js %}
-        <script type="text/javascript" src="{{file}}"></script>
+        <script type="text/javascript" src="/{{file}}"></script>
     {% endfor %}
     {% block primary-script %}{% endblock %}
   </body>

@@ -9,11 +9,15 @@ swig.setFilter('lessThan', function(str, len, sub) {
 });
 
 swig.setFilter('timeAgo', function(ts) {
-    try {
-        return timeAgo.timeAgo(ts);
-    } catch (e) {
-        console.log(e);
-        return 'now'
+    if (ts) {
+        try {
+            return timeAgo.timeAgo(ts);
+        } catch (e) {
+            console.log(e);
+            return 'now';
+        }
+    } else {
+        return '';
     }
 });
 swig.setFilter('number', function(n) {
@@ -32,4 +36,15 @@ swig.setFilter('formatUrl', function(str) {
         .replace(/\s/g, '-')
         .replace(/#/g, '-')
         .replace(/_/g, '-');
+});
+swig.setFilter('safeVar', function(obj, keystr) {
+    try {
+        var ret = eval(keystr);
+        console.log(ret);
+        if (ret == 'undefined') return '';
+        if (ret.indexOf('[object Object]') > -1) return '';
+        return ret;
+    } catch (e) {
+        return '';
+    }
 });
