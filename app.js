@@ -105,6 +105,8 @@ var options = {
 };
 
 app.use('/static', express.static('static', options));
+app.use(express.static('root', options)); // such as robots.txt, sitemap.xml
+
 
 app.get('/', videoModule.index);
 app.get('/top', videoModule.top);
