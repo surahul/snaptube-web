@@ -95,9 +95,7 @@ _.each(pageList, function(page) {
 var options = {
     dotfiles: 'ignore',
     etag: false,
-    extensions: ['htm', 'html'],
     index: false,
-    maxAge: '1d',
     redirect: false,
     setHeaders: function(res, path, stat) {
         res.set('x-timestamp', Date.now())
@@ -107,6 +105,9 @@ var options = {
 app.use('/static', express.static('static', options));
 app.use(express.static('root', options)); // such as robots.txt, sitemap.xml
 
+app.get(/\/video(.*)/, function(req, res) {
+    res.redirect(req.params[0]);
+});
 
 app.get('/', videoModule.index);
 app.get('/top', videoModule.top);
