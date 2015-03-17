@@ -6,6 +6,9 @@ p {
     float: left;
     width:50%;
 }
+footer a {
+    color: #999;
+}
 .topnav a{color:#444; display: block; float: left}
 .topnav li{display: block}
 .topnav li:before{
@@ -59,4 +62,84 @@ p {
         height: 24px;
     }
     .terms img{width:100%;}
+}
+
+
+
+
+header > .logo {
+  float: left;
+  text-indent: -9999px;
+  background-image: url('../images/snaptube-s6562baca40.png');
+  background-position: 0 -29px;
+  background-repeat: no-repeat;
+  width: 182px;
+  height: 38px;
+}
+header.small .logo{background-size: 100%;
+width: 118px;
+height: 26px;
+background-position: 0 -18px;}
+header.small>nav>a.facebook{background-size: 138px 78px;
+width: 20px;
+height: 20px;
+background-position: 1px -1px;}
+header.small>nav>a.twitter{background-size: 120px 75px;
+width: 20px;
+height: 20px;
+background-position: 0 -58px;}
+
+@media (-webkit-min-device-pixel-ratio: 2), (-o-min-device-pixel-ratio: 3 / 2), (min-device-pixel-ratio: 2) {
+  /* line 130, ../../app/sass/snaptube.scss */
+  header > .logo {
+    background-image: url('../images/snaptube-2x-s895fd23e67.png');
+    background-size: 182px 102.5px;
+    background-position: 0 -27px;
+  }
+}
+
+header > nav {
+  float: right;
+}
+nav.social {
+    padding: 23px 0;
+}
+
+header > nav > a {
+  display: inline-block;
+  text-indent: -100%;
+  overflow: hidden;
+  margin-right: 30px;
+}
+
+header > nav > a.facebook {
+  background-image: url('../images/snaptube-s6562baca40.png');
+  background-position: -1px 1px;
+  background-repeat: no-repeat;
+  width: 25px;
+  height: 25px;
+}
+@media (-webkit-min-device-pixel-ratio: 2), (-o-min-device-pixel-ratio: 3 / 2), (min-device-pixel-ratio: 2) {
+
+  header > nav > a.facebook {
+    background-image: url('../images/snaptube-2x-s895fd23e67.png');
+    background-size: 182px 102.5px;
+    background-position: 0 0;
+  }
+}
+
+header > nav > a.twitter {
+  background-image: url('../images/snaptube-s6562baca40.png');
+  background-position: 0 -84px;
+  background-repeat: no-repeat;
+  width: 31px;
+  height: 25px;
+}
+@media (-webkit-min-device-pixel-ratio: 2), (-o-min-device-pixel-ratio: 3 / 2), (min-device-pixel-ratio: 2) {
+
+  header > nav > a.twitter {
+    background-image: url('../images/snaptube-2x-s895fd23e67.png');
+    background-size: 182px 102.5px;
+    background-position: 0 -78px;
+  }
 }
