@@ -19,10 +19,9 @@ pm2 reload app.js
 ```python
 from fabric.api import hosts, run
 
-web_severs = ('em-web0', 'em-web0')
+web_servers = ('em-web0', 'em-web0')
 
 @hosts(web_servers)
 def deploy_web():
-    run('cd projects/snaptube-web/')
-    run('bash deploy.sh')
+    run('bash ~/projects/snaptube-web/deploy.sh')
 ```
