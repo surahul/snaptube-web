@@ -1,6 +1,5 @@
 module.exports = exports = {
     getMeta: function(page, $alias) {
-        // action, alias
         var $title, $description, $keywords;
         switch (page) {
             case 'index':
