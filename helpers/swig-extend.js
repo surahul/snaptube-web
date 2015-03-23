@@ -13,7 +13,6 @@ swig.setFilter('timeAgo', function(ts) {
         try {
             return timeAgo.timeAgo(ts);
         } catch (e) {
-            console.log(e);
             return 'now';
         }
     } else {
@@ -40,7 +39,6 @@ swig.setFilter('formatUrl', function(str) {
 swig.setFilter('safeVar', function(obj, keystr) {
     try {
         var ret = eval(keystr);
-        console.log(ret);
         if (ret == 'undefined') return '';
         if (ret.indexOf('[object Object]') > -1) return '';
         return ret;

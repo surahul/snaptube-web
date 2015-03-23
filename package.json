@@ -17,6 +17,7 @@
     "grunt-contrib-cssmin": "^0.12.2",
     "grunt-contrib-uglify": "^0.8.0",
     "lodash": "^3.5.0",
+    "memory-cache": "^0.1.1",
     "newrelic": "^1.17.3",
     "request": "^2.53.0",
     "swig": "^1.4.2"

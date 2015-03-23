@@ -5,6 +5,8 @@ var swig = require('swig');
 
 var API = 'http://api.snappea.com/v1/video/';
 
+var cache = require('memory-cache');
+
 var categories;
 request.get(API + 'categories?hl=id_GZ', function(error, response, body) {
     categories = JSON.parse(body);
@@ -19,10 +21,15 @@ var getKeyObj = function(key, val) {
 };
 
 var fetch = function(file, cb) {
+    if (cache.get(file)) {
+        cb(null, cache.get(file));
+        return;
+    }
     request.get(file, function(err, response, body) {
         if (err) {
             cb(err);
         } else {
+            cache.put(file, body, 1000 * 60 * 60);
             cb(null, body); // First param indicates error, null=> no error
         }
     });
