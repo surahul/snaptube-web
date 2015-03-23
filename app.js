@@ -1,3 +1,4 @@
+require('newrelic');
 var express = require('express');
 var _ = require('lodash');
 var swig = require('swig');
