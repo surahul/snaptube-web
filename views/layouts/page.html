@@ -5,7 +5,6 @@
         <title>{{$title}}}</title>
         <link rel="shortcut icon" href="/static/images/favicon2.ico" type="image/x-icon">
         <link rel="icon" href="/static/images/favicon2.ico" type="image/x-icon">
-        <link href="http://d2hlad5e3l1yf1.cloudfront.net/css/style.css" type="text/css" rel="stylesheet" />
         <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
         <meta property="og:locale" content="en_US" />
         <meta property="og:type" content="website" />
@@ -19,8 +18,10 @@
         <meta name="twitter:site" content="@snaptubeapp"/>
         <meta name="twitter:domain" content=" snaptubeapp "/>
         <meta name="twitter:creator" content="@snaptubeapp "/>
+        <meta name="google-site-verification" content="N0E4sy4CD5hlkjH7vUdJTBFgcSHRojx0IlJIOLneMho" />
         <link rel="canonical" href="http://www.snaptube.in"/>
         <link rel="publisher" href="https://plus.google.com/+SnaptubeInvideos" />
+
         <!--[if lt IE 9]>
         <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
         <![endif]-->
@@ -36,6 +37,7 @@
                     </li>
                 </ul>
             </nav>
+            {% include "../partials/social.html" %}
         </header>
         {% block content %}{% endblock %}
         {% include "../partials/footer.html" %}

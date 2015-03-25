@@ -15,14 +15,7 @@
     {% include "../partials/siteNav.html" %}
     <header {% if currentPage == 'index' %}class="small"{% endif %}>
       <a href="/" class="logo">SnapTube</a>
-      <nav>
-        <a href="https://www.facebook.com/snaptubeapp" title="Facebook" target="_blank"
-          rel="nofollow" onclick="ga('send', 'event', 'snaptube.in','snaptube', 'facebook');"
-          class="facebook">Facebook</a>
-        <a href="https://twitter.com/snaptubeapp" title="Twitter" target="_blank"
-          rel="nofollow" onclick="ga('send', 'event', 'snaptube.in', 'snaptube', 'twitter');"
-          class="twitter">Twitter</a>
-      </nav>
+      {% include "../partials/social.html" %}
     </header>
     {% block content %}{% endblock content %}
     <section id="engagement" class="for-mobile {% if currentPage == 'detail' %}hide{% endif %}">
