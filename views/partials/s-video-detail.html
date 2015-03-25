@@ -1,4 +1,11 @@
-<article class="videoDetail" id="video-detail">
+<article class="videoDetail" id="video-detail" itemscope itemtype="http://schema.org/VideoObject">
+
+    <meta itemprop="name" content="{{$data['title']}}" />
+    <meta itemprop="description" content="{{$data['description']}}">
+    <meta itemprop="thumbnailUrl" content="{{$data['pictures']['large'][0]}}" />
+    <meta itemprop="embedURL" content="{{$data|getEmbedURL}}" />
+    <meta itemprop="uploadDate" content="{{$data['createdDate']|toISOString}}" />
+
     <div class="hd clearfix">
         <div class="cover" >
             <img src="{{$data['pictures']['large'][0]}}" alt="{{$data['title']}}">

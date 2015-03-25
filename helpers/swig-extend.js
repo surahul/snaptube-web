@@ -46,3 +46,14 @@ swig.setFilter('safeVar', function(obj, keystr) {
         return '';
     }
 });
+swig.setFilter('toISOString', function(t) {
+    return new Date(t).toISOString();
+});
+swig.setFilter('getEmbedURL', function(d) {
+    try {
+        var part = d['videoEpisodes'][0]['playInfos'][0]['urls'][0][0].split('v=')[1];
+        return 'https://www.youtube.com/embed/' + part;
+    } catch (e) {
+        return '';
+    }
+});
