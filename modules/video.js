@@ -18,7 +18,16 @@ var getKeyObj = function(key, val) {
     return tmp;
 };
 
+var genNextPageUrl = function(url, page) {
+    if (page - 1) {
+        return url.replace(/\?page=\d*/, '?page=' + (page + 1));
+    } else {
+        return url + '?page=2';
+    }
+};
+
 var fetch = function(file, cb) {
+    console.log(file);
     request.get(file, function(err, response, body) {
         if (err) {
             cb(err);
@@ -54,6 +63,7 @@ module.exports = exports = {
         }), fetch, function(error, results) {
             $videosArray = _.map(results, function(i, idx) {
                 var tmp = JSON.parse(i);
+                tmp.alias = categories[idx].alias;
                 tmp.name = categories[idx].name;
                 return tmp;
             });
@@ -69,11 +79,13 @@ module.exports = exports = {
     },
     category: function(req, res) {
         var $alias = req.params.alias;
-        fetch(API + '?category=' + $alias + '&region=IN&start=0&max=40', function(err, result) {
+        var page = +req.query.page || 1;
+        fetch(API + '?category=' + $alias + '&region=IN&start=' + (page - 1) * 40 + '&max=40', function(err, result) {
             $list = JSON.parse(result);
             res.render('video/category', {
                 currentPage: 'category',
                 categories: categories,
+                nextPage: genNextPageUrl(req.url, page),
                 $alias: $alias,
                 $list: $list,
                 $sitePath: [
@@ -103,7 +115,8 @@ module.exports = exports = {
     },
     list: function(req, res) {
         var id = req.params.id;
-        fetch(API + 'special/detail?id=' + id + '&region=IN&start=0&max=40', function(err, result) {
+        var page = +req.query.page || 1;
+        fetch(API + 'special/detail?id=' + id + '&region=IN&start=' + (page - 1) * 40 + '&max=40', function(err, result) {
             $specialsArray = JSON.parse(result);
             $specialsArray.items.sort(function(b, a) {
                 return a.latestEpisodeDate - b.latestEpisodeDate;
@@ -111,6 +124,7 @@ module.exports = exports = {
             res.render('video/list', {
                 currentPage: 'list',
                 categories: categories,
+                nextPage: genNextPageUrl(req.url, page),
                 $sitePath: [
                     ['List', '/list'],
                     [$specialsArray.special.name, '/list/' + id]
@@ -120,8 +134,9 @@ module.exports = exports = {
         });
     },
     top: function(req, res) {
+        var page = +req.query.page || 1;
         async.map([
-            API + 'toplist/topdownload?region=IN&start=0&max=101'
+            API + 'toplist/topdownload?region=IN&start=' + (page - 1) * 101 + '&max=101'
         ], fetch, function(err, results) {
             var topData = JSON.parse(results[0]);
             topData.items.sort(function(b, a) {
@@ -130,6 +145,7 @@ module.exports = exports = {
             res.render('video/top', {
                 currentPage: 'top',
                 categories: categories,
+                nextPage: genNextPageUrl(req.url, page),
                 $sitePath: [
                     ['Top', '/top']
                 ],
@@ -139,12 +155,14 @@ module.exports = exports = {
         });
     },
     popular: function(req, res) {
+        var page = +req.query.page || 1;
         async.map([
-            API + 'starter?region=IN&start=0&max=40'
+            API + 'starter?region=IN&start=' + (page - 1) * 40 + '&max=40'
         ], fetch, function(err, results) {
             var $popularArray = JSON.parse(results[0]);
             res.render('video/popular', {
                 currentPage: 'popular',
+                nextPage: genNextPageUrl(req.url, page),
                 $sitePath: [
                     ['Popular', '/popular']
                 ],

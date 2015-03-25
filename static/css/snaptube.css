@@ -1368,3 +1368,16 @@ footer .copyright{padding:0;}
     font-size: 112%;
   }
 }
+
+.link-wrap {
+  text-align: center;
+}
+.link-wrap a {
+  color: #A54A3F;
+  text-decoration: underline;
+}
+
+li .desc .info {
+  white-space: nowrap;
+}
+
