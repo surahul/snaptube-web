@@ -169,6 +169,7 @@ module.exports = exports = {
             var $popularArray = JSON.parse(results[0]);
             res.render('video/popular', {
                 currentPage: 'popular',
+                categories: categories,
                 nextPage: genNextPageUrl(req.url, page),
                 $sitePath: [
                     ['Popular', '/popular']

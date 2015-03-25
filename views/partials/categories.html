@@ -2,7 +2,7 @@
 <nav id="subNav" class="sub-nav clearfix for-web">
     <ul>
         <li><a href="/">Homepage</a></li>
-        {% for i in ['list', 'top', 'category'] %}
+        {% for i in ['list', 'top', 'popular', 'category'] %}
         <li {% if currentPage == i %}class="active"{% endif %}>
             {% if i == 'category' %}
             <a href="/category">Categories <i class="icon arrow-down"></i></a>
