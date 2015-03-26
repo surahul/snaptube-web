@@ -179,11 +179,7 @@ module.exports = exports = {
         });
     },
     detail: function(req, res) {
-        if (req.spf) {
-            return exports.detailSPF(req, res);
-        }
-
-        function render() {
+        function renderHtml() {
             $sitePath.push([$detailArray['title'], req.url]);
             res.render('video/detail.html', {
                 currentPage: 'detail',
@@ -194,37 +190,8 @@ module.exports = exports = {
                 categories: categories
             });
         }
-        // top, popular|list, category
-        var params = req.url.split('_').slice(1);
-        var action = params[0];
-        var $sitePath = [
-            [_.capitalize(action), '/' + action]
-        ];
-        var $videoId = params[2]; // /.*_(\d*)$/.exec(req.url)[1];
-        if ($videoId) {
-            async.map([
-                API + $videoId,
-                API + 'starter?region=IN&start=0&max=10'
-            ], fetch, function(err, results) {
-                $detailArray = JSON.parse(results[0]);
-                $popularArray = JSON.parse(results[1]);
-                if (action == 'list') {
-                    fetch(API + 'special/detail?id=' + params[1] + '&region=IN&start=0&max=40', function(err, result) {
-                        var $specialsArray = JSON.parse(result);
-                        $sitePath.push([$specialsArray['special']['name'], '/list/' + $specialsArray['special']['id']]);
-                        render();
-                    });
-                } else if (action == 'category') {
-                    $sitePath.push([params[1], '/category/' + params[1]]);
-                    render();
-                } else {
-                    render();
-                }
-            });
-        }
-    },
-    detailSPF: function(req, res) {
-        function render() {
+
+        function renderSPF() {
             $sitePath.push([$detailArray['title'], req.url]);
             res.json({
                 title: $detailArray['title'],
@@ -238,32 +205,53 @@ module.exports = exports = {
                 }
             });
         }
-        var params = req.url.split('_').slice(1);
-        var action = params[0];
+        var render = req.spf ? renderSPF : renderHtml;
+
+        var $videoId, action, alias, lid;
+        if (req.params.vid) {
+            $videoId = req.params.vid;
+            action = req.params.action;
+            debugger;
+            if (req.params.alias) {
+                action = 'category';
+                alias = req.params.alias;
+            }
+            if (req.params.lid) {
+                lid = req.params.lid;
+                action = 'list';
+            }
+        } else {
+            var params = req.url.split('_').slice(1);
+            action = params[0];
+            $videoId = params[2]; // /.*_(\d*)$/.exec(req.url)[1];
+        }
+
         var $sitePath = [
             [_.capitalize(action), '/' + action]
         ];
-        var $videoId = params[2]; // /.*_(\d*)$/.exec(req.url)[1];
         if ($videoId) {
             async.map([
                 API + $videoId,
+                API + 'starter?region=IN&start=0&max=10'
             ], fetch, function(err, results) {
                 $detailArray = JSON.parse(results[0]);
+                $popularArray = JSON.parse(results[1]);
                 if (action == 'list') {
-                    fetch(API + 'special/detail?id=' + params[1] + '&region=IN&start=0&max=40', function(err, result) {
+                    lid = lid ? lid : params[1];
+                    fetch(API + 'special/detail?id=' + lid + '&region=IN&start=0&max=40', function(err, result) {
                         var $specialsArray = JSON.parse(result);
                         $sitePath.push([$specialsArray['special']['name'], '/list/' + $specialsArray['special']['id']]);
                         render();
                     });
                 } else if (action == 'category') {
-                    $sitePath.push([params[1], '/category/' + params[1]]);
+                    alias = alias ? alias : params[1];
+                    $sitePath.push([alias, '/category/' + alias]);
                     render();
                 } else {
                     render();
                 }
             });
         }
-
     },
     downloading: function(req, res) {
         res.render('video/downloading', {

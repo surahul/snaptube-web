@@ -45,8 +45,8 @@ app.use(function(req, res, next) {
         assets: assets,
         _req: req,
         _locals: req.locals,
-        $keywords: 'keyword sss',
-        $description: req.url,
+        $keywords: '',
+        $description: '',
         checkMobile: function(req) {
             if (!req.header) return false;
             var ua = req.header('user-agent');
@@ -95,7 +95,7 @@ _.each(pageList, function(page) {
 
 var options = {
     dotfiles: 'ignore',
-    etag: false,
+    etag: true,
     index: false,
     redirect: false,
     setHeaders: function(res, path, stat) {
@@ -110,15 +110,31 @@ app.get(/\/video(.*)/, function(req, res) {
     res.redirect(req.params[0]);
 });
 
+app.get('/howto', function(req, res) {
+    res.redirect('/installation-guide');
+});
+
 app.get('/', videoModule.index);
 app.get('/top', videoModule.top);
 app.get('/popular', videoModule.popular);
 app.get('/list', videoModule.lists);
+
+app.get('/list/id/:id', videoModule.list);
 app.get('/list/:id', videoModule.list);
+
 app.get('/category', videoModule.categories);
+
 app.get('/category/:alias', videoModule.category);
+app.get('/category/alias/:alias', videoModule.category);
+
 app.get('/downloading', videoModule.downloading);
-app.get('*', videoModule.detail); // use RegExp
+
+app.get('/:action/vid/:vid', videoModule.detail);
+app.get('/:action/vid/:vid', videoModule.detail);
+app.get('/list/id/:lid/vid/:vid', videoModule.detail);
+app.get('/category/alias/:alias/vid/:vid', videoModule.detail);
+app.get('*', videoModule.detail);
+
 app.use(function(err, req, res, next) {
     res.render('404.html');
 });
