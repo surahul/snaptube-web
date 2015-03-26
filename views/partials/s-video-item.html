@@ -1,10 +1,12 @@
 <li itemprop="video" itemscope itemtype="http://schema.org/VideoObject">
 
+    {% if $item['description'] %}
     <meta itemprop="name" content="{{$item['title']}}" />
     <meta itemprop="description" content="{{$item['description']}}">
     <meta itemprop="thumbnailUrl" content="{{$item['pictures']['small'][0]}}" />
-    <meta itemprop="embedURL" content="{{$data|getEmbedURL}}" />
+    <meta itemprop="embedURL" content="{{$item|getEmbedURL}}" />
     <meta itemprop="uploadDate" content="{{$item['latestEpisodeDate']|toISOString}}" />
+    {% endif %}
 
     <figure class="pic">
         <a href="/{{$item['title']|formatUrl+itemUrlSep+$item['id']}}">

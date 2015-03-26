@@ -47,7 +47,11 @@ swig.setFilter('safeVar', function(obj, keystr) {
     }
 });
 swig.setFilter('toISOString', function(t) {
-    return new Date(t).toISOString();
+    try {
+        return new Date(t).toISOString();
+    } catch (e) {
+        return '';
+    }
 });
 swig.setFilter('getEmbedURL', function(d) {
     try {
