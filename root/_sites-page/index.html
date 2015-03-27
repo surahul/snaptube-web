@@ -26,7 +26,7 @@
 
     <script type="text/tpl" id="siteItem">
         <a href="{{i.url}}">
-            <img src="{{i.icon}}">
+            <img v-attr="src: i.icon">
             <h3>{{i.title}}</h3>
             <p>{{i.description}}</p>
             <i class="i-right-arrow"></i>

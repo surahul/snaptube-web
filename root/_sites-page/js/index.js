@@ -33,66 +33,9 @@ function startApp(apiData) {
 (function() {
     FastClick.attach(document.body);
 
-    startApp([{
-        title: 'Short Video Sites',
-        sites: [{
-            title: 'Youtube',
-            description: 'have fun with the largest world club etc',
-            icon: 'http://ionicframework.com/img/docs/blue-album.jpg',
-            url: 'http://localhost:3100/proxy?proxy=http://www.dailymotion.com'
-        }, {
-            title: 'Youtube',
-            description: 'have fun with the largest world club etc',
-            icon: 'http://ionicframework.com/img/docs/blue-album.jpg',
-            url: 'http://youtube.com'
-        }, {
-            title: 'Youtube',
-            description: 'have fun with the largest world club etc',
-            icon: 'http://ionicframework.com/img/docs/blue-album.jpg',
-            url: 'http://youtube.com'
-        }]
-    }, {
-        title: 'Short Video Sites',
-        sites: [{
-            title: 'Youtube',
-            description: 'have fun with the largest world club etc',
-            icon: 'http://ionicframework.com/img/docs/blue-album.jpg',
-            url: 'http://youtube.com'
-        }, {
-            title: 'Youtube',
-            description: 'have fun with the largest world club etc',
-            icon: 'http://ionicframework.com/img/docs/blue-album.jpg',
-            url: 'http://youtube.com'
-        }, {
-            title: 'Youtube',
-            description: 'have fun with the largest world club etc',
-            icon: 'http://ionicframework.com/img/docs/blue-album.jpg',
-            url: 'http://youtube.com'
-        }]
-    }, {
-        title: 'Short Video Sites',
-        sites: [{
-            title: 'Youtube',
-            description: 'have fun with the largest world club etc',
-            icon: 'http://ionicframework.com/img/docs/blue-album.jpg',
-            url: 'http://youtube.com'
-        }, {
-            title: 'Youtube',
-            description: 'have fun with the largest world club etc',
-            icon: 'http://ionicframework.com/img/docs/blue-album.jpg',
-            url: 'http://youtube.com'
-        }, {
-            title: 'Youtube',
-            description: 'have fun with the largest world club etc',
-            icon: 'http://ionicframework.com/img/docs/blue-album.jpg',
-            url: 'http://youtube.com'
-        }]
-    }]);
-
     $.ajax({
         type: 'GET',
-        url: APIPREFIX + '/query',
-        data: params,
-        success: makeApp
+        url: APIPREFIX + '/_data/sites.json',
+        success: startApp
     });
 })();
