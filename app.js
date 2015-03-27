@@ -96,7 +96,7 @@ _.each(pageList, function(page) {
 var options = {
     dotfiles: 'ignore',
     etag: true,
-    index: true,
+    index: false,
     redirect: false,
     setHeaders: function(res, path, stat) {
         res.set('x-timestamp', Date.now())
