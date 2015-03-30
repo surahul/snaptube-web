@@ -29,7 +29,6 @@ var genNextPageUrl = function(url, page) {
 };
 
 var fetch = function(file, cb) {
-    console.log(file);
     if (cache.get(file)) {
         cb(null, cache.get(file));
         return;
@@ -129,6 +128,7 @@ module.exports = exports = {
                 return a.latestEpisodeDate - b.latestEpisodeDate;
             });
             res.render('video/list', {
+                title: $specialsArray.special.name,
                 currentPage: 'list',
                 categories: categories,
                 nextPage: genNextPageUrl(req.url, page),
@@ -211,7 +211,6 @@ module.exports = exports = {
         if (req.params.vid) {
             $videoId = req.params.vid;
             action = req.params.action;
-            debugger;
             if (req.params.alias) {
                 action = 'category';
                 alias = req.params.alias;
