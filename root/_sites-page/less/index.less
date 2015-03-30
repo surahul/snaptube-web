@@ -2,16 +2,15 @@
 
 body {
     background-color: @bgColor;
-    padding-top: 10px;
-    padding-bottom: 30px;
+    font-family: Roboto-Regular;
 }
 
 h2 {
     color: @h2Color;
     line-height: 44px;
     margin-left: 16px;
-    font-size: 16px;
     font-weight: normal;
+    font-size: 16px;
 }
 
 .list {
@@ -20,6 +19,9 @@ h2 {
     padding-bottom: 1px;
     padding-left: 0;
     margin-bottom: 20px;
+    li {
+      -webkit-tap-highlight-color: rgba(253, 240, 233, 0.5);
+    }
 }
 .list:last-child {
     margin-bottom: 0px;
@@ -28,21 +30,20 @@ h2 {
 .item {
 
     h3 {
-        color: @h3Color;
         font-size: 14px;
         font-weight: normal;
         line-height: 20px;
+        color: #3D3D3D;
     }
 
     p {
         line-height: 16px;
-        font-size: 12px;
         overflow: hidden;
+        font-size: 12px;
+        color: #7C7C7C;
     }
 
     -webkit-user-drag: none;
-    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-    -webkit-tap-highlight-color: transparent;
 
     border-color: #ddd;
       background-color: #fff;

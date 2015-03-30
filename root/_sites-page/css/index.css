@@ -4,17 +4,19 @@
 a {
   text-decoration: none;
 }
+a:visted {
+  color: normal;
+}
 body {
   background-color: #f5f5f5;
-  padding-top: 10px;
-  padding-bottom: 30px;
+  font-family: Roboto-Regular;
 }
 h2 {
-  color: #dfdfdf;
+  color: #656565;
   line-height: 44px;
   margin-left: 16px;
-  font-size: 16px;
   font-weight: normal;
+  font-size: 16px;
 }
 .list {
   position: relative;
@@ -23,13 +25,14 @@ h2 {
   padding-left: 0;
   margin-bottom: 20px;
 }
+.list li {
+  -webkit-tap-highlight-color: rgba(253, 240, 233, 0.5);
+}
 .list:last-child {
   margin-bottom: 0px;
 }
 .item {
   -webkit-user-drag: none;
-  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-  -webkit-tap-highlight-color: transparent;
   border-color: #ddd;
   background-color: #fff;
   color: #444;
@@ -49,15 +52,16 @@ h2 {
   height: 34px;
 }
 .item h3 {
-  color: #424242;
   font-size: 14px;
   font-weight: normal;
   line-height: 20px;
+  color: #3D3D3D;
 }
 .item p {
   line-height: 16px;
-  font-size: 12px;
   overflow: hidden;
+  font-size: 12px;
+  color: #7C7C7C;
 }
 .item .img-wrap {
   width: 95px;

@@ -11,19 +11,30 @@
         <h2>{{group.title}}</h2>
         <ul class="list">
           {% for i in group.sites %}
-            <li class="item">
-              <a href="{{i.url}}">
+            <li>
+              <a href="{{i.url}}" onclick="ga('send', 'event', 'android', 'videosites', '{{i.title}}');">
+                <div class="item">
                   <div class="img-wrap">
                     <img src="{{i.icon}}">
                   </div>
                   <h3>{{i.title}}</h3>
                   <p>{{i.description}}</p>
                   <i class="i-right-arrow"></i>
+                </div>
               </a>
             </li>
           {% endfor %}
         </ul>
     </div>
     {% endfor %}
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-58716663-1', 'auto');
+      ga('send', 'pageview');
+    </script>
   </body>
 </html>
