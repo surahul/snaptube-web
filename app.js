@@ -1,124 +1,50 @@
-if (process.env.NODE_ENV == 'production') {
-    require('newrelic');
-}
-
 var express = require('express');
-var _ = require('lodash');
-var swig = require('swig');
 var app = express();
-var assetmanager = require('assetmanager');
-// Import your asset file
-var assets = assetmanager.process({
-    assets: require('./assets.json'),
-    debug: (process.env.NODE_ENV !== 'production')
-});
 
-_.capitalize = function(str) {
-    return str[0].toUpperCase() + str.slice(1);
-};
+var swig = require('swig');
 require('./helpers/swig-extend.js');
-var videoModule = require('./modules/video');
-var seoModule = require('./modules/seo');
-
-// app.set('view engine', 'jade');
-// This is where all the magic happens!
 app.engine('html', swig.renderFile);
-
 app.set('view engine', 'html');
 app.set('views', __dirname + '/views');
 
-// Swig will cache templates for you, but you can disable
-// that and use Express's caching instead, if you like:
-app.set('view cache', false);
-// To disable Swig's cache, do the following:
-swig.setDefaults({
-    cache: false
-});
-// NOTE: You should always cache templates in a production environment.
-// Don't leave both of these to `false` in production!
-
-app.use(function(req, res, next) {
-    // console.log(req.url);
-    if (req.url.indexOf('spf=navigate') > -1) {
-        req.spf = true;
-    }
-
-    // Todo: switch by url
-    _.extend(res.locals, {
-        assets: assets,
-        _req: req,
-        _locals: req.locals,
-        $keywords: '',
-        $description: '',
-        checkMobile: function(req) {
-            if (!req.header) return false;
-            var ua = req.header('user-agent');
-            return /mobile/i.test(ua);
-        },
-        getMeta: function(page, alias) {
-            return seoModule.getMeta(page, alias);
-        }
+if (process.env.NODE_ENV == 'production') {
+    require('newrelic');
+} else {
+    app.set('view cache', false);
+    swig.setDefaults({
+        cache: false
     });
-    next();
+}
+
+/* Baic Prepare: inject locals, assetmanager etc */
+var baseModule = require('./modules/base');
+baseModule.bootstrap(app);
+
+/* Simple Page with layout and support SPF */
+var pageModule = require('./modules/pages');
+pageModule.serve(['about', 'faq', 'contact', 'installation-guide', 'privacy', 'terms'], app);
+app.get('/howto', function(req, res) {
+    res.redirect('/installation-guide');
 });
 
-var fs = require('fs');
-var pageWrapTpl = fs.readFileSync('views/pages/_wrap.html', 'utf8');
-var pageList = ['about', 'faq', 'contact', 'installation-guide', 'privacy', 'terms'];
-// serve pages view
-_.each(pageList, function(page) {
-    var tpl = fs.readFileSync('views/pages/' + page + '.html', 'utf8');
-    app.get('/' + page, function(req, res) {
-        res.locals.currentPage = page;
-        var titleMap = {
-            'about': 'Best Youtube Downloader for Android',
-            'faq': 'High Resolution Mobile Videos Download',
-            'contact': 'SnapTube Contact Us',
-            'installation-guide': 'Youtube Downloader for Android : Step By Step',
-            'privacy': 'SnapTube Privacy',
-            'terms': 'SnapTube Terms'
-        };
-        if (req.spf) {
-            return res.json({
-                title: titleMap[page],
-                body: {
-                    'page-terms': tpl
-                }
-            });
-        } else {
-            res.send(swig.render(pageWrapTpl.replace('###PLACEHOLDER###', tpl), {
-                locals: {
-                    $title: titleMap[page]
-                },
-                filename: 'views/pages/' + page + '.html' // MAKE include/extend/import work
-            }));
-        }
-    });
-});
-
-var options = {
-    dotfiles: 'ignore',
-    etag: true,
-    index: false,
-    redirect: false,
-    setHeaders: function(res, path, stat) {
-        res.set('x-timestamp', Date.now())
-    }
-};
-
+/* Temp used by android client */
 var sitesModule = require('./modules/sites');
 app.get('/_sites-page/index.html', sitesModule.list);
 app.get('/_sites-page/_delcache', sitesModule.clear);
 
-app.use('/static', express.static('static', options));
-app.use(express.static('root', options)); // such as robots.txt, sitemap.xml
+/* Static and root file serves */
+var StaticOptions = {
+    dotfiles: 'ignore',
+    etag: true,
+    index: false
+};
+app.use('/static', express.static('static', StaticOptions));
+app.use(express.static('root', StaticOptions)); // such as robots.txt, sitemap.xml
 
+/* Video Module - Core functionality */
+var videoModule = require('./modules/video');
 app.get(/\/video(.*)/, function(req, res) {
     res.redirect(req.params[0]);
-});
-
-app.get('/howto', function(req, res) {
-    res.redirect('/installation-guide');
 });
 
 app.get('/', videoModule.index);
@@ -126,23 +52,27 @@ app.get('/top', videoModule.top);
 app.get('/popular', videoModule.popular);
 app.get('/list', videoModule.lists);
 
-app.get('/list/id/:id', videoModule.list);
+app.get('/list/id/:id', function(req, res) {
+    res.redirect('/list/' + req.params.id);
+});
 app.get('/list/:id', videoModule.list);
 
 app.get('/category', videoModule.categories);
 
 app.get('/category/:alias', videoModule.category);
-app.get('/category/alias/:alias', videoModule.category);
+app.get('/category/alias/:alias', function(req, res) {
+    res.redirect('/category/' + req.params.alias);
+});
 
 app.get('/downloading', videoModule.downloading);
 
-app.get('/:action/vid/:vid', videoModule.detail);
 app.get('/:action/vid/:vid', videoModule.detail);
 app.get('/list/id/:lid/vid/:vid', videoModule.detail);
 app.get('/category/alias/:alias/vid/:vid', videoModule.detail);
 app.get('*', videoModule.detail);
 
 app.use(function(err, req, res, next) {
+    console.log(err);
     res.render('404.html');
 });
 
