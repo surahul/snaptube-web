@@ -1,4 +1,7 @@
-require('newrelic');
+if (process.env.NODE_ENV == 'production') {
+    require('newrelic');
+}
+
 var express = require('express');
 var _ = require('lodash');
 var swig = require('swig');
@@ -102,6 +105,10 @@ var options = {
         res.set('x-timestamp', Date.now())
     }
 };
+
+var sitesModule = require('./modules/sites');
+app.get('/_sites-page/index.html', sitesModule.list);
+app.get('/_sites-page/_delcache', sitesModule.clear);
 
 app.use('/static', express.static('static', options));
 app.use(express.static('root', options)); // such as robots.txt, sitemap.xml

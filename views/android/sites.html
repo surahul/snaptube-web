@@ -1,0 +1,29 @@
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+    <title>Snaptube Sites - Mobile</title>
+    <link href="/_sites-page/css/index.css" rel="stylesheet">
+  </head>
+  <body>
+    {% for group in $data %}
+    <div>
+        <h2>{{group.title}}</h2>
+        <ul class="list">
+          {% for i in group.sites %}
+            <li class="item">
+              <a href="{{i.url}}">
+                  <div class="img-wrap">
+                    <img src="{{i.icon}}">
+                  </div>
+                  <h3>{{i.title}}</h3>
+                  <p>{{i.description}}</p>
+                  <i class="i-right-arrow"></i>
+              </a>
+            </li>
+          {% endfor %}
+        </ul>
+    </div>
+    {% endfor %}
+  </body>
+</html>
