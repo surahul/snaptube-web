@@ -39,7 +39,7 @@ h2 {
   position: relative;
   z-index: 2;
   display: block;
-  margin: -1px;
+  margin: -1px 0;
   padding: 16px;
   padding-right: 22px;
   border-width: 1px;
