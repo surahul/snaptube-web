@@ -19,6 +19,7 @@ module.exports = exports = {
             _.each(data, function(i) {
                 _.each(i.sites, function(ii) {
                     ii.icon = ii.icon.split('.png')[0] + '@2x.png';
+                    ii.icon = ii.icon.replace('images', 'image');
                 });
             });
             // cache.put(CACHEKEY, data, 1000 * 60 * 60);
