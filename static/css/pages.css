@@ -308,3 +308,30 @@ header > nav > a.twitter {
     background-position: 0 -78px;
   }
 }
+
+.download-btn {
+    text-decoration: none;
+
+    background: #b33f35;
+    color: #fff;
+    font-size: 20px;
+    padding: 16px 83px;
+    display: inline-block;
+    border-radius: 3px;
+    -moz-transition: all, 0.4s;
+    -o-transition: all, 0.4s;
+    -webkit-transition: all, 0.4s;
+    transition: all, 0.4s;
+    display: block;
+    margin: 10px auto;
+    padding: 16px 0;
+    width: 200px;
+    text-align: center;
+}
+.download-btn:hover {
+    opacity: 0.8;
+}
+.download-btn:active {
+    opacity: 1;
+    background: #2f7c2f;
+}

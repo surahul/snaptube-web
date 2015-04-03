@@ -15,7 +15,7 @@ module.exports = exports = {
                     'about': 'Best Youtube Downloader for Android',
                     'faq': 'High Resolution Mobile Videos Download',
                     'contact': 'SnapTube Contact Us',
-                    'installation-guide': 'Youtube Downloader for Android : Step By Step',
+                    'youtube-downloader-installation': 'Youtube Downloader for Android : Step By Step',
                     'privacy': 'SnapTube Privacy',
                     'terms': 'SnapTube Terms'
                 };

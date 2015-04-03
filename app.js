@@ -22,9 +22,12 @@ baseModule.bootstrap(app);
 
 /* Simple Page with layout and support SPF */
 var pageModule = require('./modules/pages');
-pageModule.serve(['about', 'faq', 'contact', 'installation-guide', 'privacy', 'terms'], app);
+pageModule.serve(['about', 'faq', 'contact', 'youtube-downloader-installation', 'privacy', 'terms'], app);
 app.get('/howto', function(req, res) {
-    res.redirect('/installation-guide');
+    res.redirect('/youtube-downloader-installation');
+});
+app.get('/installation-guide', function(req, res) {
+    res.redirect('/youtube-downloader-installation');
 });
 
 /* Temp used by android client */
