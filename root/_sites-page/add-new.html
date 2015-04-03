@@ -1,0 +1,41 @@
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+    <title>Snaptube Sites - Mobile</title>
+    <link href="/_sites-page/css/index.css" rel="stylesheet">
+  </head>
+  <body class="x-site-new">
+    <h1>Report Video Site</h1>
+    <p>If you want snaptube to support more download sites, please tell us the URL of the site here:</p>
+    <form action="/_sites-page/new" method="POST">
+      <input class="input-field" required id="url-field"
+        placeholder="Please input URL here" name="url">
+      <p class="x-error-msg"></p>
+      <input type="submit" value="Submit" class="submit-field">
+    </form>
+
+    <script type="text/javascript">
+    var $input = document.getElementById('url-field');
+    var $errText = document.querySelector('.x-error-msg');
+    var regex = new RegExp("^(http[s]?:\\/\\/(www\\.)?|ftp:\\/\\/(www\\.)?|www\\.){1}([0-9A-Za-z-\\.@:%_\+~#=]+)+((\\.[a-zA-Z]{2,3})+)(/(.)*)?(\\?(.)*)?");
+    document.querySelector('.submit-field').addEventListener('click', function(e) {
+        if (regex.test($input.value)) {
+          $errText.innerHTML = '';
+        } else {
+          e.preventDefault();
+          $errText.innerHTML = '请输入正确的 URL 格式';
+        }
+    }, false);
+    </script>
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-58716663-1', 'auto');
+      ga('send', 'pageview');
+    </script>
+  </body>
+</html>

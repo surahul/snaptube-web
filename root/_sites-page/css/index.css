@@ -7,16 +7,102 @@ a {
 a:visted {
   color: normal;
 }
-body {
+.x-cross {
+  position: relative;
+  width: 50px;
+  height: 50px;
+  border: 1px solid black;
+}
+.x-cross span {
+  position: absolute;
+  background: #555;
+}
+.x-cross .i-vertical {
+  left: 0;
+  width: 33%;
+  height: 100%;
+}
+.x-cross .i-horizontal {
+  top: 33%;
+  width: 100%;
+  height: 33%;
+}
+@font-face {
+  font-family: 'fontello';
+  src: url('../font/fontello.eot?8299936');
+  src: url('../font/fontello.eot?8299936#iefix') format('embedded-opentype'), url('../font/fontello.woff?8299936') format('woff'), url('../font/fontello.ttf?8299936') format('truetype'), url('../font/fontello.svg?8299936#fontello') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+/* Chrome hack: SVG is rendered more smooth in Windozze. 100% magic, uncomment if you need it. */
+/* Note, that will break hinting! In other OS-es font will be not as sharp as it could be */
+/*
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+  @font-face {
+    font-family: 'fontello';
+    src: url('../font/fontello.svg?8299936#fontello') format('svg');
+  }
+}
+*/
+[class^="icon-"]:before,
+[class*=" icon-"]:before {
+  font-family: "fontello";
+  font-style: normal;
+  font-weight: normal;
+  speak: none;
+  display: inline-block;
+  text-decoration: inherit;
+  width: 1em;
+  margin-right: .2em;
+  text-align: center;
+  /* opacity: .8; */
+
+  /* For safety - reset parent styles, that can break glyph codes*/
+
+  font-variant: normal;
+  text-transform: none;
+  /* fix buttons height, for twitter bootstrap */
+
+  line-height: 1em;
+  /* Animation center compensation - margins should be symmetric */
+
+  /* remove if not needed */
+
+  margin-left: .2em;
+  /* you can be more comfortable with increased icons size */
+
+  /* font-size: 120%; */
+
+  /* Uncomment for 3D effect */
+
+  /* text-shadow: 1px 1px 1px rgba(127, 127, 127, 0.3); */
+
+}
+.icon-plus:before {
+  content: '\e806';
+}
+/* '' */
+.icon-right:before {
+  content: '\e807';
+}
+/* '' */body {
   background-color: #f5f5f5;
   font-family: Roboto-Regular;
 }
+h1 {
+  font-size: 22px;
+  font-weight: normal;
+  line-height: 40px;
+}
 h2 {
   color: #656565;
-  line-height: 44px;
-  margin-left: 16px;
   font-weight: normal;
   font-size: 16px;
+  line-height: 24px;
+}
+.x-sites-list h2 {
+  line-height: 44px;
+  margin-left: 16px;
 }
 .list {
   position: relative;
@@ -83,4 +169,68 @@ h2 {
   left: 0;
   right: 0;
   margin: auto;
+}
+.x-addmore-wrap {
+  text-align: center;
+  margin: 10px 0;
+}
+.x-addmore-wrap a {
+  padding: 10px 20px;
+  display: inline-block;
+  background: #aaa;
+  color: #eee;
+  font-weight: lighter;
+}
+.x-site-new {
+  margin: 25px 40px;
+}
+.x-site-new p {
+  color: #656565;
+  line-height: 24px;
+  font-size: 16px;
+}
+.x-site-new form > * {
+  display: block;
+  margin: 18px 0;
+}
+.x-site-new form .input-field {
+  width: 100%;
+  line-height: 32px;
+  height: 32px;
+  font-size: 14px;
+  padding: 0 8px;
+}
+.x-site-new form .submit-field {
+  padding: 8px 20px;
+  background-color: #e8473c;
+  border: 0;
+  font-size: 16px;
+  color: #fff;
+  font-weight: normal;
+}
+.x-site-new form .x-error-msg {
+  color: #e8473c;
+  font-size: 12px;
+}
+.x-success-wrap {
+  margin: 25px 40px;
+  text-align: center;
+}
+.x-success-wrap img {
+  margin-bottom: 15px;
+  width: 86px;
+  height: 86px;
+}
+.x-success-wrap hr {
+  margin: 20px 0;
+}
+.x-success-wrap ul.action-list {
+  list-style: none;
+  padding: 0;
+}
+.x-success-wrap ul.action-list li {
+  margin: 20px 0;
+}
+.x-success-wrap ul.action-list li a {
+  color: #e8473c;
 }
