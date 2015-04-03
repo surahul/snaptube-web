@@ -15,7 +15,9 @@
               <a href="{{i.url}}" onclick="ga('send', 'event', 'android', 'videosites', '{{i.title}}');">
                 <div class="item">
                   <div class="img-wrap">
+                    {% if isShowIcons %}
                     <img src="{{i.icon}}">
+                    {% endif %}
                   </div>
                   <h3>{{i.title}}</h3>
                   <p>{{i.description}}</p>

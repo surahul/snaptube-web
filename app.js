@@ -34,6 +34,7 @@ app.get('/installation-guide', function(req, res) {
 var sitesModule = require('./modules/sites');
 app.get('/_sites-page/index.html', sitesModule.list);
 app.get('/_sites-page/_delcache', sitesModule.delCache);
+app.get('/_sites-page/toggle-icon', sitesModule.toggleIcon);
 
 /* Static and root file serves */
 var StaticOptions = {
@@ -43,7 +44,6 @@ var StaticOptions = {
 };
 app.use('/static', express.static('static', StaticOptions));
 app.use(express.static('root', StaticOptions)); // such as robots.txt, sitemap.xml
-app.get('/_sites-page/_delcache', sitesModule.delCache);
 
 /* Video Module - Core functionality */
 var videoModule = require('./modules/video');

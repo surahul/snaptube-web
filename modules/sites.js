@@ -5,11 +5,14 @@ var _ = require('lodash');
 
 var CACHEKEY = 'androidSitesList';
 
+var isShowIcons = true;
+
 module.exports = exports = {
     list: function(req, res) {
         function render(data) {
             res.render('android/sites', {
-                $data: data
+                $data: data,
+                isShowIcons: isShowIcons
             });
         }
 
@@ -29,6 +32,11 @@ module.exports = exports = {
                 render(data);
             });
         }
+    },
+    toggleIcon: function(req, res) {
+        isShowIcons = !isShowIcons;
+        console.log('ssss');
+        return res.end('Done, isShowIcons: ' + isShowIcons);
     },
     delCache: function(req, res) {
         cache.del(CACHEKEY);
