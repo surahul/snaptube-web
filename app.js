@@ -30,7 +30,7 @@ app.get('/howto', function(req, res) {
 /* Temp used by android client */
 var sitesModule = require('./modules/sites');
 app.get('/_sites-page/index.html', sitesModule.list);
-app.get('/_sites-page/_delcache', sitesModule.clear);
+app.get('/_sites-page/_delcache', sitesModule.delCache);
 
 /* Static and root file serves */
 var StaticOptions = {
@@ -40,6 +40,7 @@ var StaticOptions = {
 };
 app.use('/static', express.static('static', StaticOptions));
 app.use(express.static('root', StaticOptions)); // such as robots.txt, sitemap.xml
+app.get('/_sites-page/_delcache', sitesModule.delCache);
 
 /* Video Module - Core functionality */
 var videoModule = require('./modules/video');

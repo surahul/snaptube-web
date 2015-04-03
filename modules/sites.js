@@ -13,26 +13,25 @@ module.exports = exports = {
             });
         }
 
-        request.get('http://www.wandoujia.com/needle/source/getJSON/59', function(err, resp, body) {
-            var data = JSON.parse(body);
-            // check retina media
-            _.each(data, function(i) {
-                _.each(i.sites, function(ii) {
-                    ii.icon = ii.icon.split('.png')[0] + '@2x.png';
-                    ii.icon = ii.icon.replace('images', 'image');
-                });
-            });
-            // cache.put(CACHEKEY, data, 1000 * 60 * 60);
-            render(data);
-        });
-
-        /*if (cache.get(CACHEKEY)) {
+        if (cache.get(CACHEKEY)) {
             render(cache.get(CACHEKEY));
         } else {
-        }*/
+            request.get('http://www.wandoujia.com/needle/source/getJSON/59', function(err, resp, body) {
+                var data = JSON.parse(body);
+                // check retina media
+                _.each(data, function(i) {
+                    _.each(i.sites, function(ii) {
+                        ii.icon = ii.icon.split('.png')[0] + '@2x.png';
+                        ii.icon = ii.icon.replace('images', 'image');
+                    });
+                });
+                cache.put(CACHEKEY, data, 1000 * 60 * 60);
+                render(data);
+            });
+        }
     },
-    clear: function(req, res) {
+    delCache: function(req, res) {
         cache.del(CACHEKEY);
-        res.end('delete ' + CACHEKEY + ' done!');
+        return res.end('delete ' + CACHEKEY + ' done!');
     }
 };
