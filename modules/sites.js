@@ -5,7 +5,7 @@ var _ = require('lodash');
 
 var CACHEKEY = 'androidSitesList';
 
-var isShowIcons = true;
+var isShowIcons = false;
 
 module.exports = exports = {
     list: function(req, res) {
