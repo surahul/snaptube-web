@@ -16,6 +16,34 @@ if (process.env.NODE_ENV == 'production') {
     });
 }
 
+var bunyan = require('bunyan');
+var EmailStream = require('bunyan-emailstream').EmailStream;
+var emailStream = new EmailStream({
+    from: 'robot@snaptube.in',
+    to: 'gaohailang@wandoujia.com',
+    subject: '[DEBUG] - Error for snaptube.in website'
+}, {
+    type: 'direct'
+});
+var logger = bunyan.createLogger({
+    name: 'snaptube.in',
+    serializers: {
+        req: bunyan.stdSerializers.req
+    },
+    streams: [{
+        level: 'info',
+        stream: process.stdout
+    }, {
+        type: 'rotating-file',
+        path: 'webapp.log',
+        period: '1w',
+        count: 4
+    }, {
+        type: 'raw',
+        stream: emailStream
+    }]
+});
+
 /* Baic Prepare: inject locals, assetmanager etc */
 var baseModule = require('./modules/base');
 baseModule.bootstrap(app);
@@ -76,7 +104,10 @@ app.get('/category/alias/:alias/vid/:vid', videoModule.detail);
 app.get('*', videoModule.detail);
 
 app.use(function(err, req, res, next) {
-    console.log(err);
+    logger.debug({
+        req: req,
+        err: err
+    });
     res.render('404.html');
 });
 
