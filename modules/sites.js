@@ -4,12 +4,27 @@ var cache = require('memory-cache');
 var _ = require('lodash');
 
 var nodemailer = require('nodemailer');
-var transporter = nodemailer.createTransport();
-var baseMailObj = {
-    from: 'robot@snaptube.in',
-    to: 'gaohailang@wandoujia.com, liujiao@wandoujia.com',
-    subject: '[Daily] - video site submit'
-};
+
+var sendMail = (function() {
+    var transporter = nodemailer.createTransport();
+    var baseMailObj = {
+        from: 'robot@snaptube.in',
+        to: 'gaohailang@wandoujia.com, liujiao@wandoujia.com',
+        subject: '[Daily] - video site submit'
+    };
+
+    var sender;
+    if (process.env.NODE_ENV == 'production') {
+        sender = function(msg) {
+            baseMailObj.text = msg;
+            transporter.sendMail(baseMailObj);
+        }
+    } else {
+        sender = function() {}
+    }
+
+    return sender;
+})();
 
 var CACHEKEY = 'androidSitesList';
 
@@ -53,10 +68,13 @@ module.exports = exports = {
         return res.end('delete ' + CACHEKEY + ' done!');
     },
     create: function(req, res) {
-        var url = req.body.url;
-        baseMailObj.text = url;
         try {
-            transporter.sendMail(baseMailObj);
+            var url = req.body.url;
+            sendMail(url);
+            logger.info({
+                req: req,
+                text: '[Sites Module] create new site from user feedback: ' + url
+            });
         } catch (e) {
             logger.debug({
                 req: req,

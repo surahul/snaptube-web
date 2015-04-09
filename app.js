@@ -1,15 +1,6 @@
 var express = require('express');
 var app = express();
 
-var bodyParser = require('body-parser');
-
-// parse application/x-www-form-urlencoded
-app.use(bodyParser.urlencoded({
-    extended: false
-}));
-// parse application/json
-app.use(bodyParser.json());
-
 var swig = require('swig');
 require('./helpers/swig-extend.js');
 app.engine('html', swig.renderFile);
@@ -61,7 +52,6 @@ var videoModule = require('./modules/video');
 app.get(/\/video(.*)/, function(req, res) {
     res.redirect(req.params[0]);
 });
-
 app.get('/', videoModule.index);
 app.get('/top', videoModule.top);
 app.get('/popular', videoModule.popular);
@@ -86,6 +76,8 @@ app.get('/list/id/:lid/vid/:vid', videoModule.detail);
 app.get('/category/alias/:alias/vid/:vid', videoModule.detail);
 app.get('*', videoModule.detail);
 
+
+/* last rescure - log it */
 app.use(function(err, req, res, next) {
     logger.debug({
         req: req,
