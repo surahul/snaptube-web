@@ -1,6 +1,15 @@
 var express = require('express');
 var app = express();
 
+var bodyParser = require('body-parser');
+
+// parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({
+    extended: false
+}));
+// parse application/json
+app.use(bodyParser.json());
+
 var swig = require('swig');
 require('./helpers/swig-extend.js');
 app.engine('html', swig.renderFile);
@@ -16,37 +25,19 @@ if (process.env.NODE_ENV == 'production') {
     });
 }
 
-var bunyan = require('bunyan');
-var EmailStream = require('bunyan-emailstream').EmailStream;
-var emailStream = new EmailStream({
-    from: 'robot@snaptube.in',
-    to: 'gaohailang@wandoujia.com',
-    subject: '[DEBUG] - Error for snaptube.in website'
-}, {
-    type: 'direct'
-});
-var logger = bunyan.createLogger({
-    name: 'snaptube.in',
-    serializers: {
-        req: bunyan.stdSerializers.req
-    },
-    streams: [{
-        level: 'info',
-        stream: process.stdout
-    }, {
-        type: 'rotating-file',
-        path: 'webapp.log',
-        period: '1w',
-        count: 4
-    }, {
-        type: 'raw',
-        stream: emailStream
-    }]
-});
-
 /* Baic Prepare: inject locals, assetmanager etc */
 var baseModule = require('./modules/base');
 baseModule.bootstrap(app);
+var logger = baseModule.getLogger();
+
+/* Static and root file serves */
+var StaticOptions = {
+    dotfiles: 'ignore',
+    etag: true,
+    index: false
+};
+app.use('/static', express.static('static', StaticOptions));
+app.use(express.static('root', StaticOptions)); // such as robots.txt, sitemap.xml
 
 /* Simple Page with layout and support SPF */
 var pageModule = require('./modules/pages');
@@ -61,17 +52,9 @@ app.get('/installation-guide', function(req, res) {
 /* Temp used by android client */
 var sitesModule = require('./modules/sites');
 app.get('/_sites-page/index.html', sitesModule.list);
-app.get('/_sites-page/_delcache', sitesModule.delCache);
 app.get('/_sites-page/toggle-icon', sitesModule.toggleIcon);
-
-/* Static and root file serves */
-var StaticOptions = {
-    dotfiles: 'ignore',
-    etag: true,
-    index: false
-};
-app.use('/static', express.static('static', StaticOptions));
-app.use(express.static('root', StaticOptions)); // such as robots.txt, sitemap.xml
+app.post('/_sites-page/new', sitesModule.create);
+app.get('/_sites-page/_delcache', sitesModule.delCache);
 
 /* Video Module - Core functionality */
 var videoModule = require('./modules/video');

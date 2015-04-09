@@ -7,6 +7,34 @@ var assets = assetmanager.process({
     debug: (process.env.NODE_ENV !== 'production')
 });
 
+var bunyan = require('bunyan');
+var EmailStream = require('bunyan-emailstream').EmailStream;
+var emailStream = new EmailStream({
+    from: 'robot@snaptube.in',
+    to: 'gaohailang@wandoujia.com',
+    subject: '[DEBUG] - Error for snaptube.in website'
+}, {
+    type: 'direct'
+});
+var logger = bunyan.createLogger({
+    name: 'snaptube.in',
+    serializers: {
+        req: bunyan.stdSerializers.req
+    },
+    streams: [{
+        level: 'info',
+        stream: process.stdout
+    }, {
+        type: 'rotating-file',
+        path: 'webapp.log',
+        period: '1w',
+        count: 4
+    }, {
+        type: 'raw',
+        stream: emailStream
+    }]
+});
+
 module.exports = exports = {
     bootstrap: function(app) {
         app.use(function(req, res, next) {
@@ -32,5 +60,8 @@ module.exports = exports = {
             });
             next();
         });
+    },
+    getLogger: function() {
+        return logger;
     }
 }

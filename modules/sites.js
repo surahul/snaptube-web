@@ -3,9 +3,20 @@ var request = require('request');
 var cache = require('memory-cache');
 var _ = require('lodash');
 
+var nodemailer = require('nodemailer');
+var transporter = nodemailer.createTransport();
+var baseMailObj = {
+    from: 'robot@snaptube.in',
+    to: 'gaohailang@wandoujia.com, liujiao@wandoujia.com',
+    subject: '[Daily] - video site submit'
+};
+
 var CACHEKEY = 'androidSitesList';
 
 var isShowIcons = false;
+
+var baseModule = require('./base');
+var logger = baseModule.getLogger();
 
 module.exports = exports = {
     list: function(req, res) {
@@ -35,11 +46,23 @@ module.exports = exports = {
     },
     toggleIcon: function(req, res) {
         isShowIcons = !isShowIcons;
-        console.log('ssss');
         return res.end('Done, isShowIcons: ' + isShowIcons);
     },
     delCache: function(req, res) {
         cache.del(CACHEKEY);
         return res.end('delete ' + CACHEKEY + ' done!');
+    },
+    create: function(req, res) {
+        var url = req.body.url;
+        baseMailObj.text = url;
+        try {
+            transporter.sendMail(baseMailObj);
+        } catch (e) {
+            logger.debug({
+                req: req,
+                err: e
+            });
+        }
+        return res.redirect('/_sites-page/add-success.html');
     }
 };

@@ -1,16 +1,29 @@
 @import "_base";
+@import "_fontello";
 
 body {
     background-color: @bgColor;
     font-family: Roboto-Regular;
 }
 
+h1 {
+  font-size: 22px;
+  font-weight: normal;
+  line-height: 40px;
+}
+
 h2 {
     color: @h2Color;
-    line-height: 44px;
-    margin-left: 16px;
     font-weight: normal;
     font-size: 16px;
+    line-height: 24px;
+}
+
+.x-sites-list {
+  h2 {
+    line-height: 44px;
+    margin-left: 16px;
+  }
 }
 
 .list {
@@ -89,3 +102,78 @@ h2 {
       margin: auto;
     }
 }
+
+
+.x-addmore-wrap {
+  text-align: center;
+  margin: 10px 0;
+
+  a {
+    padding: 10px 20px;
+    display: inline-block;
+    background: #aaa;
+    color: #eee;
+    font-weight: lighter;
+  }
+}
+
+.x-site-new {
+  margin: 25px 40px;
+
+  p {
+    color: @h2Color;
+    line-height: 24px;
+    font-size: 16px;
+  }
+
+  form > * {
+    display: block;
+    margin: 18px 0;
+  }
+  form {
+     .input-field {
+        width: 100%;
+        line-height: 32px;
+        height: 32px;
+        font-size: 14px;
+        padding: 0 8px;
+     }
+     .submit-field {
+        padding: 8px 20px;
+        background-color: #e8473c;
+        border: 0;
+        font-size: 16px;
+        color: #fff;
+        font-weight: normal;
+     }
+     .x-error-msg {
+       color: @linkColor;
+       font-size: 12px;
+     }
+  }
+}
+
+
+.x-success-wrap {
+  margin: 25px 40px;
+  text-align: center;
+
+  img {
+    margin-bottom: 15px;
+    width: 86px;
+    height: 86px;
+  }
+  hr {
+    margin: 20px 0;
+  }
+  ul.action-list {
+    list-style: none;
+    padding: 0;
+
+    li {
+      margin: 20px 0;
+      a {color: @linkColor;}
+    }
+  }
+}
+
