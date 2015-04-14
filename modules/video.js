@@ -228,29 +228,28 @@ module.exports = exports = {
         var $sitePath = [
             [_.capitalize(action), '/' + action]
         ];
-        if ($videoId) {
-            async.map([
-                API + $videoId,
-                API + 'starter?region=IN&start=0&max=10'
-            ], fetch, function(err, results) {
-                $detailArray = JSON.parse(results[0]);
-                $popularArray = JSON.parse(results[1]);
-                if (action == 'list') {
-                    lid = lid ? lid : params[1];
-                    fetch(API + 'special/detail?id=' + lid + '&region=IN&start=0&max=40', function(err, result) {
-                        var $specialsArray = JSON.parse(result);
-                        $sitePath.push([$specialsArray['special']['name'], '/list/' + $specialsArray['special']['id']]);
-                        render();
-                    });
-                } else if (action == 'category') {
-                    alias = alias ? alias : params[1];
-                    $sitePath.push([alias, '/category/' + alias]);
+        if (!$videoId) next();
+        async.map([
+            API + $videoId,
+            API + 'starter?region=IN&start=0&max=10'
+        ], fetch, function(err, results) {
+            $detailArray = JSON.parse(results[0]);
+            $popularArray = JSON.parse(results[1]);
+            if (action == 'list') {
+                lid = lid ? lid : params[1];
+                fetch(API + 'special/detail?id=' + lid + '&region=IN&start=0&max=40', function(err, result) {
+                    var $specialsArray = JSON.parse(result);
+                    $sitePath.push([$specialsArray['special']['name'], '/list/' + $specialsArray['special']['id']]);
                     render();
-                } else {
-                    render();
-                }
-            });
-        }
+                });
+            } else if (action == 'category') {
+                alias = alias ? alias : params[1];
+                $sitePath.push([alias, '/category/' + alias]);
+                render();
+            } else {
+                render();
+            }
+        });
     },
     downloading: function(req, res) {
         res.render('video/downloading', {

@@ -30,6 +30,11 @@ var StaticOptions = {
 app.use('/static', express.static('static', StaticOptions));
 app.use(express.static('root', StaticOptions)); // such as robots.txt, sitemap.xml
 
+/* async callback error handler */
+var domainHandler = require('./helpers/domain-middleware');
+app.use(domainHandler.Handler());
+
+
 /* Simple Page with layout and support SPF */
 var pageModule = require('./modules/pages');
 pageModule.serve(['about', 'faq', 'contact', 'youtube-downloader-installation', 'privacy', 'terms'], app);
@@ -76,14 +81,26 @@ app.get('/list/id/:lid/vid/:vid', videoModule.detail);
 app.get('/category/alias/:alias/vid/:vid', videoModule.detail);
 app.get('*', videoModule.detail);
 
-
+/* empty handler? 404 it */
 /* last rescure - log it */
 app.use(function(err, req, res, next) {
-    logger.debug({
-        req: req,
-        err: err
-    });
+    if (!_.isEmpty(err)) {
+        logger.error({
+            text: 'service 500',
+            req: req,
+            err: err
+        });
+    } else {
+        logger.error({
+            req: req,
+            text: 'not found ' + req.getUrl()
+        });
+    }
     res.render('404.html');
 });
+
+/*process.on('uncaughtException', function(err) {
+    console.log('uncaughtException caught the error');
+});*/
 
 app.listen(3000);
