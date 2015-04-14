@@ -59,7 +59,9 @@ module.exports = exports = {
             }
 
             req.getUrl = function() {
-                return req.protocol + "://" + req.get('host') + req.originalUrl;
+                // Todo: using nginx X-Forwarded-For $host etc header
+                // return req.protocol + "://" + req.get('host') + req.originalUrl;
+                return 'http://www.snaptube.in' + req.originalUrl;
             }
 
             // Todo: switch by url
