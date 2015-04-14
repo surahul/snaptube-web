@@ -3,6 +3,8 @@ var async = require('async');
 var _ = require('lodash');
 var swig = require('swig');
 
+var seoModule = require('./seo');
+
 var API = 'http://api.snappea.com/v1/video/';
 
 var cache = require('memory-cache');
@@ -184,6 +186,7 @@ module.exports = exports = {
             res.render('video/detail.html', {
                 currentPage: 'detail',
                 title: $detailArray['title'],
+                description: seoModule.genVideoDesc($detailArray['title'], $sitePath),
                 $sitePath: $sitePath,
                 $data: $detailArray,
                 $popular: $popularArray,

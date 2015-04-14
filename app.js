@@ -1,3 +1,4 @@
+var _ = require('lodash');
 var express = require('express');
 var app = express();
 
@@ -34,15 +35,14 @@ app.use(express.static('root', StaticOptions)); // such as robots.txt, sitemap.x
 var domainHandler = require('./helpers/domain-middleware');
 app.use(domainHandler.Handler());
 
-
 /* Simple Page with layout and support SPF */
 var pageModule = require('./modules/pages');
 pageModule.serve(['about', 'faq', 'contact', 'youtube-downloader-installation', 'privacy', 'terms'], app);
 app.get('/howto', function(req, res) {
-    res.redirect('/youtube-downloader-installation');
+    res.redirect(301, '/youtube-downloader-installation');
 });
 app.get('/installation-guide', function(req, res) {
-    res.redirect('/youtube-downloader-installation');
+    res.redirect(301, '/youtube-downloader-installation');
 });
 
 /* Temp used by android client */
@@ -55,7 +55,7 @@ app.get('/_sites-page/_delcache', sitesModule.delCache);
 /* Video Module - Core functionality */
 var videoModule = require('./modules/video');
 app.get(/\/video(.*)/, function(req, res) {
-    res.redirect(req.params[0]);
+    res.redirect(301, req.params[0]);
 });
 app.get('/', videoModule.index);
 app.get('/top', videoModule.top);
@@ -63,7 +63,7 @@ app.get('/popular', videoModule.popular);
 app.get('/list', videoModule.lists);
 
 app.get('/list/id/:id', function(req, res) {
-    res.redirect('/list/' + req.params.id);
+    res.redirect(301, '/list/' + req.params.id);
 });
 app.get('/list/:id', videoModule.list);
 
@@ -71,7 +71,7 @@ app.get('/category', videoModule.categories);
 
 app.get('/category/:alias', videoModule.category);
 app.get('/category/alias/:alias', function(req, res) {
-    res.redirect('/category/' + req.params.alias);
+    res.redirect(301, '/category/' + req.params.alias);
 });
 
 app.get('/downloading', videoModule.downloading);

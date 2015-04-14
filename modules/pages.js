@@ -38,11 +38,11 @@ module.exports = exports = {
                     });
                 } else {
                     res.send(swig.render(pageWrapTpl.replace('###PLACEHOLDER###', tpl), {
-                        locals: {
+                        locals: _.extend({}, {
                             $title: titleMap[page] || '',
-                            $description: descMap[page]|| descMap['about'],
-                            $keywords: keywordsMap[page]||keywordsMap['about']
-                        },
+                            $description: descMap[page] || descMap['about'],
+                            $keywords: keywordsMap[page] || keywordsMap['about']
+                        }, res.locals),
                         filename: DIR + page + '.html' // MAKE include/extend/import work
                     }));
                 }

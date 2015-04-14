@@ -58,6 +58,10 @@ module.exports = exports = {
                 req.spf = true;
             }
 
+            req.getUrl = function() {
+                return req.protocol + "://" + req.get('host') + req.originalUrl;
+            }
+
             // Todo: switch by url
             _.extend(res.locals, {
                 assets: assets,

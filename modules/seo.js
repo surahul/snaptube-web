@@ -1,3 +1,5 @@
+var _ = require('lodash');
+
 module.exports = exports = {
     getMeta: function(page, $alias) {
         var $title, $description, $keywords;
@@ -17,6 +19,7 @@ module.exports = exports = {
                 if ($alias == 'alias' || !$alias) {
                     break;
                 }
+                $alias = $alias[0].toUpperCase() + $alias.slice(1);
                 switch ($alias) {
                     case 'Music':
                         $title = "Latest Hindi Songs Free Download Android Application";
@@ -84,5 +87,13 @@ module.exports = exports = {
             $description: $description,
             $keywords: $keywords
         };
+    },
+    genVideoDesc: function(title, crumbs) {
+        crumbs = _.clone(crumbs);
+        crumbs.pop();
+        var tmp = this.getMeta.apply(this, (_.map(crumbs, function(i) {
+            return _.first(i).toLowerCase();
+        })));
+        return title + " | " + tmp.$description;
     }
 };
