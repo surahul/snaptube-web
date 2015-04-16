@@ -177,8 +177,7 @@ h2 {
 .x-addmore-wrap a {
   padding: 10px 20px;
   display: inline-block;
-  background: #aaa;
-  color: #eee;
+  color: red;
   font-weight: lighter;
 }
 .x-site-new {
