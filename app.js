@@ -35,6 +35,16 @@ app.use(express.static('root', StaticOptions)); // such as robots.txt, sitemap.x
 var domainHandler = require('./helpers/domain-middleware');
 app.use(domainHandler.Handler());
 
+
+/* first-class domain to www second domain */
+app.use(function(req, res, next) {
+    if (req.hostname === 'snaptube.in') {
+        console.log('routing....');
+        return res.redirect(301, 'http://www.snaptube.in' + req.path);
+    }
+    next();
+});
+
 /* Simple Page with layout and support SPF */
 var pageModule = require('./modules/pages');
 pageModule.serve(['about', 'faq', 'contact', 'youtube-downloader-installation', 'privacy', 'terms'], app);
@@ -91,6 +101,9 @@ app.use(function(err, req, res, next) {
             err: err
         });
     } else {
+        if ((req.path == '/favicon.ico') || (req.path == ('[object%20Object]'))) {
+            return;
+        }
         logger.error({
             req: req,
             text: 'not found ' + req.getUrl()
