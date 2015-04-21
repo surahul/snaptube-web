@@ -3,6 +3,9 @@ var _ = require('lodash');
 module.exports = exports = {
     getMeta: function(page, $alias) {
         var $title, $description, $keywords;
+        $title = 'SnapTube - Download YouTube Videos and Music';
+        $description = 'Download YouTube videos to your Android. It’s easy, fast, and free. Get the official version here.';
+        $keywords = "youtube mp3 downloader";
         switch (page) {
             case 'index':
                 $title = "Easy YouTube Downloader :  Free Songs Download MP3";
@@ -77,9 +80,7 @@ module.exports = exports = {
                 $keywords = "youtube downloader software";
                 break;
             default:
-                $title = 'SnapTube - Download YouTube Videos and Music';
-                $description = 'Download YouTube videos to your Android. It’s easy, fast, and free. Get the official version here.';
-                $keywords = "youtube mp3 downloader";
+                break;
                 // check pageTitle, add prefix Youtube, mp3 download - && Download YouTube videos to your Android. It’s easy, fast, and free. Get the official version here.
         };
         return {

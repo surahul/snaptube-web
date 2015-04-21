@@ -1,7 +1,8 @@
 {% set i = getMeta(currentPage, $alias) %}
 {% if title %}{% set title = title+' '+i.$title %}{% else %}{% set title = i.$title %}{% endif %}
+{% if !description %}{% set description = i.$description %}{% endif %}
 <title>{{title}}</title>
-<meta name="description" content="{{description?description:i.$description}}">
+<meta name="description" content="{{description}}">
 <meta name="keywords" content="{{i.$keywords}}">
 <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
 <meta name="twitter:card" content="summary_large_image">
@@ -11,7 +12,7 @@
 <meta property="og:locale" content="en_US" />
 <meta property="og:type" content="website" />
 <meta property="og:title" content="{{title}}" />
-<meta property="og:description" content="{{description?description:i.$description}}" />
+<meta property="og:description" content="{{description}}" />
 <meta property="og:url" content="http://www.snaptube.in " />
 <meta property="og:site_name" content="SnapTube" />
 <meta property="fb:page_id" content="746438775443012" />
