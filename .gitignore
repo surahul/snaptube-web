@@ -1,3 +1,5 @@
 node_modules/
 static/build
 newrelic_agent.log
+webapp.log
+root/
