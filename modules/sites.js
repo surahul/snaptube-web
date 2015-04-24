@@ -38,6 +38,7 @@ module.exports = exports = {
         function render(data) {
             if (req.query.pn && isGPApk(req.query.pn)) {
                 isShowIcons = false;
+                data = filterYoutube(data);
             } else {
                 isShowIcons = true;
             }
@@ -45,6 +46,18 @@ module.exports = exports = {
                 $data: data,
                 isShowIcons: isShowIcons
             });
+        }
+
+        function filterYoutube(list) {
+            list = _.clone(list);
+            _.each(list, function(g) {
+                _.each(g.sites, function(i, idx) {
+                    if (i.title.toLowerCase() == 'youtube') {
+                        g.sites.splice(idx, 1);
+                    }
+                });
+            });
+            return list;
         }
 
         function isGPApk(pn) {
@@ -75,6 +88,7 @@ module.exports = exports = {
                         ii.url = buildIntentUri(ii.url);
                     });
                 });
+
                 cache.put(CACHEKEY, data, 1000 * 60 * 60);
                 render(data);
             });
