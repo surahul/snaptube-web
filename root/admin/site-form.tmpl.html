@@ -1,0 +1,45 @@
+<md-dialog>
+  <md-content>
+    <form name="siteForm">
+      <md-input-container>
+        <label>Name</label>
+        <input md-maxlength="20" required name="name" ng-model="site.title">
+        <!-- <div ng-messages="projectForm.description.$error">
+          <div ng-message="required">This is required.</div>
+          <div ng-message="md-maxlength">The name has to be less than 30 characters long.</div>
+        </div> -->
+      </md-input-container>
+
+      <md-input-container>
+        <label>Url</label>
+        <input required name="url" type="url" ng-model="site.url">
+      </md-input-container>
+
+      <md-input-container>
+        <label>Description</label>
+        <input required name="description" ng-model="site.description">
+      </md-input-container>
+
+      <md-input-container>
+        <label>Logo Image</label>
+        <input required name="logo" type="file" ng-model="site.logo">
+      </md-input-container>
+    </form>
+  </md-content>
+  <!-- Toggle by edit/create -->
+  <!-- Edit: remove/cancel/访问 -->
+  <!-- Create: 确定/取消 -->
+  <div class="md-actions" layout="row">
+    <md-button href="{{site.url}}" target="_blank"
+      ng-show="mode=='edit'">
+      访问
+    </md-button>
+    <span flex></span>
+    <md-button ng-click="answer('not useful')">
+     取消
+    </md-button>
+    <md-button ng-click="answer('useful')" class="md-primary">
+      确定
+    </md-button>
+  </div>
+</md-dialog>
