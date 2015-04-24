@@ -326,6 +326,7 @@ h2 {
   font-style: normal;
   border: 1px solid #fff;
   position: absolute;
+  top: 30px;
 }
 .x-guide-steps .step .title h2 {
   padding-left: 60px;
