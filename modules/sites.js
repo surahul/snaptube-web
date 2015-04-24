@@ -28,7 +28,7 @@ var sendMail = (function() {
 
 var CACHEKEY = 'androidSitesList';
 
-var isShowIcons = false;
+var isShowIcons = true;
 
 var baseModule = require('./base');
 var logger = baseModule.getLogger();
@@ -42,6 +42,21 @@ module.exports = exports = {
             });
         }
 
+        function isGPApk(pn) {
+            // GP包名:
+            var pns = 'com.astube.first, com.snaptubelite.two，com.snaptube.lite.cone';
+            return pns.indexOf(pn) > -1;
+        }
+
+        function buildIntentUri(url) {
+            var parts = url.split('://'),
+                scheme, hostpath;
+            hostpath = parts.pop();
+            scheme = parts[0] ? parts[0] : 'http';
+            // intent://pagalworld.com#Intent;scheme=http;action=android.intent.action.VIEW;package=_package.local;end
+            return 'intent://' + hostpath + '#Intent;scheme=' + scheme + ';action=android.intent.action.VIEW;package=_package.local;end';
+        }
+
         if (cache.get(CACHEKEY)) {
             render(cache.get(CACHEKEY));
         } else {
@@ -52,9 +67,13 @@ module.exports = exports = {
                     _.each(i.sites, function(ii) {
                         ii.icon = ii.icon.split('.png')[0] + '@2x.png';
                         ii.icon = ii.icon.replace('images', 'image');
+                        ii.url = buildIntentUri(ii.url);
                     });
                 });
                 cache.put(CACHEKEY, data, 1000 * 60 * 60);
+                if (req.query.pn && isGPApk(req.query.pn)) {
+                    isShowIcons = false;
+                }
                 render(data);
             });
         }
