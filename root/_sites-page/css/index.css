@@ -237,8 +237,17 @@ h2 {
   background: #4b504f;
 }
 .p-guide header {
-  background: url(../image/instagram-guide/content_-_header.png);
+  background-image: url(../image/instagram-guide/content_-_header.png);
+  background-repeat: no-repeat;
   background-size: cover;
+}
+@media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
+  .p-guide header {
+    /* on retina, use image that's scaled by 2 */
+  
+    background-image: url(../image/instagram-guide/content_-_header@2x.png);
+    background-size: cover;
+  }
 }
 .p-guide header h1 {
   line-height: 40px;
@@ -250,13 +259,13 @@ h2 {
 }
 .p-guide header img {
   visibility: hidden;
+  width: 100%;
 }
 .x-guide-steps {
   color: #fff;
   padding-bottom: 30px;
 }
 .x-guide-steps .step {
-  height: 245px;
   padding: 0 10px;
 }
 .x-guide-steps .step.step1 .screencast {
@@ -273,16 +282,36 @@ h2 {
   }
 }
 .x-guide-steps .step.step2 .screencast {
-  background: url(../image/instagram-guide/description_pic_2.png);
+  background-image: url(../image/instagram-guide/description_pic_2.png);
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+@media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
+  .x-guide-steps .step.step2 .screencast {
+    /* on retina, use image that's scaled by 2 */
+  
+    background-image: url(../image/instagram-guide/description_pic_2@2x.png);
+    background-size: cover;
+  }
 }
 .x-guide-steps .step.step3 .screencast {
-  background: url(../image/instagram-guide/description_pic_3.png);
+  background-image: url(../image/instagram-guide/description_pic_3.png);
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+@media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
+  .x-guide-steps .step.step3 .screencast {
+    /* on retina, use image that's scaled by 2 */
+  
+    background-image: url(../image/instagram-guide/description_pic_3@2x.png);
+    background-size: cover;
+  }
 }
 .x-guide-steps .step .title {
-  height: 50px;
+  height: 60px;
   line-height: 30px;
   font-size: 18px;
-  width: 62%;
+  width: 70%;
   padding: 20px 0;
   position: relative;
 }
@@ -303,7 +332,8 @@ h2 {
   font-size: 18px;
   position: relative;
   top: 50%;
-  transform: translateY(-50%);
+  color: #fff;
+  -webkit-transform: translateY(-50%);
 }
 .x-guide-steps .step .wrap {
   position: relative;
@@ -317,6 +347,7 @@ h2 {
 }
 .x-guide-steps .step .screencast img {
   visibility: hidden;
+  width: 100%;
 }
 .x-guide-steps .step .instructions {
   display: inline-block;
