@@ -233,3 +233,65 @@ h2 {
 .x-success-wrap ul.action-list li a {
   color: #e8473c;
 }
+.p-guide header {
+  height: 125px;
+}
+.p-guide header h1 {
+  line-height: 40px;
+  font-size: 30px;
+  width: 70%;
+  float: right;
+  margin: 20px 0;
+}
+.x-guide-steps {
+  color: #fff;
+  background: #4b504f;
+  padding-bottom: 30px;
+}
+.x-guide-steps .step {
+  height: 245px;
+  padding: 0 10px;
+}
+.x-guide-steps .step .title {
+  height: 50px;
+  line-height: 30px;
+  font-size: 18px;
+  width: 62%;
+  padding: 20px 0;
+  position: relative;
+}
+.x-guide-steps .step .title i {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  text-align: center;
+  vertical-align: middle;
+  line-height: 40px;
+  display: inline-block;
+  font-style: normal;
+  border: 1px solid #fff;
+  position: absolute;
+}
+.x-guide-steps .step .title h2 {
+  padding-left: 60px;
+  font-size: 18px;
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+}
+.x-guide-steps .step .wrap {
+  position: relative;
+}
+.x-guide-steps .step .screencast {
+  vertical-align: middle;
+  height: 160px;
+  width: 60%;
+  outline: 1px solid;
+  display: inline-block;
+  margin-right: 2%;
+}
+.x-guide-steps .step .instructions {
+  display: inline-block;
+  width: 36%;
+  vertical-align: middle;
+}
