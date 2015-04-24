@@ -35,15 +35,20 @@ var logger = baseModule.getLogger();
 
 module.exports = exports = {
     list: function(req, res) {
-        function render(data) {
-            var pn = req.query.pn;
-            if (pn && isGPApk(pn)) {
+
+        function render(list) {
+            var data = _.cloneDeep(list);
+            var pn = req.query.pn || '';
+            /*if (pn && isGPApk(pn)) {
                 isShowIcons = false;
             } else {
                 isShowIcons = true;
-            }
-            if (pn !== 'com.snaptube.premium') {
+            }*/
+            if (pn === 'com.snaptube.premium') {
+                isShowIcons = true;
+            } else {
                 data = filterYoutube(data);
+                isShowIcons = false;
             }
             res.render('android/sites', {
                 $data: data,
@@ -52,11 +57,11 @@ module.exports = exports = {
         }
 
         function filterYoutube(list) {
-            list = _.clone(list);
             _.each(list, function(g) {
-                _.each(g.sites, function(i, idx) {
+                _.any(g.sites, function(i, idx) {
                     if (i.title.toLowerCase() == 'youtube.com') {
                         g.sites.splice(idx, 1);
+                        return true;
                     }
                 });
             });

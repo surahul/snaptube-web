@@ -13,7 +13,7 @@
           {% for i in group.sites %}
             <li>
               <a href="{{i.url}}" onclick="ga('send', 'event', 'android', 'videosites', '{{i.title}}');">
-                <div class="item">
+                <div class="item" {% if !isShowIcons %}style="padding-left: 10px;"{% endif %}>
                   <div class="img-wrap">
                     {% if isShowIcons %}
                     <img src="{{i.icon}}">
