@@ -1,6 +1,29 @@
+.image-2x(@image, @width, @height, @repeat: no-repeat) {
+  @filename  : ~`/(.*)\.(jpg|jpeg|png|gif)/.exec(@{image})[1]`;
+  @extension : ~`/(.*)\.(jpg|jpeg|png|gif)/.exec(@{image})[2]`;
+  background-image: ~`"url(@{filename}.@{extension})"`;
+  background-repeat: @repeat;
+  background-size: cover;
+
+  @media
+    only screen and (-webkit-min-device-pixel-ratio: 2),
+    only screen and (   min--moz-device-pixel-ratio: 2),
+    only screen and (     -o-min-device-pixel-ratio: 2/1),
+    only screen and (        min-device-pixel-ratio: 2),
+    only screen and (                min-resolution: 192dpi),
+    only screen and (                min-resolution: 2dppx) {
+      /* on retina, use image that's scaled by 2 */
+      background-image: ~`"url(@{filename}@2x.@{extension})"`;
+      // background-size: @width @height;
+      background-size: cover;
+  }
+}
+
 .p-guide {
+  background: #4b504f;
     header {
-      height: 125px;
+      .image-2x('../image/instagram-guide/content_-_header.png');
+      background-size: cover;
 
       h1 {
         line-height: 40px;
@@ -8,15 +31,34 @@
           width: 70%;
           float: right;
           margin: 20px 0;
+          display: none;
+      }
+      img {
+        visibility: hidden;
       }
     }
 }
 
 .x-guide-steps {
   color: #fff;
-  background: #4b504f;
   padding-bottom: 30px;
   .step {
+    &.step1 {
+      .screencast {
+        .image-2x('../image/instagram-guide/description_pic_1.png');
+        // background: url(../image/instagram-guide/description_pic_1.png);
+      }
+    }
+    &.step2 {
+      .screencast {
+        .image-2x('../image/instagram-guide/description_pic_2.png');
+      }
+    }
+    &.step3 {
+      .screencast {
+        .image-2x('../image/instagram-guide/description_pic_3.png');
+      }
+    }
     height: 245px;
     padding: 0 10px;
     .title {
@@ -50,11 +92,13 @@
     }
     .screencast {
       vertical-align: middle;
-      height: 160px;
       width: 60%;
-      outline: 1px solid;
       display: inline-block;
       margin-right: 2%;
+      background-size: cover;
+      img {
+        visibility: hidden;
+      }
     }
     .instructions {
       display: inline-block;

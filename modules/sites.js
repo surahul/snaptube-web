@@ -36,6 +36,11 @@ var logger = baseModule.getLogger();
 module.exports = exports = {
     list: function(req, res) {
         function render(data) {
+            if (req.query.pn && isGPApk(req.query.pn)) {
+                isShowIcons = false;
+            } else {
+                isShowIcons = true;
+            }
             res.render('android/sites', {
                 $data: data,
                 isShowIcons: isShowIcons
@@ -71,9 +76,6 @@ module.exports = exports = {
                     });
                 });
                 cache.put(CACHEKEY, data, 1000 * 60 * 60);
-                if (req.query.pn && isGPApk(req.query.pn)) {
-                    isShowIcons = false;
-                }
                 render(data);
             });
         }
