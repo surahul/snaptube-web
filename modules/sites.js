@@ -36,11 +36,9 @@ var logger = baseModule.getLogger();
 module.exports = exports = {
     list: function(req, res) {
         function render(data) {
-            var pn = req.query.pn
-            if (pn) {
-                if (isGPApk(pn)) {
-                    isShowIcons = false;
-                }
+            var pn = req.query.pn;
+            if (pn && isGPApk(pn)) {
+                isShowIcons = false;
             } else {
                 isShowIcons = true;
             }
