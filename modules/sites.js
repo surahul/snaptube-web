@@ -36,11 +36,16 @@ var logger = baseModule.getLogger();
 module.exports = exports = {
     list: function(req, res) {
         function render(data) {
-            if (req.query.pn && isGPApk(req.query.pn)) {
-                isShowIcons = false;
-                data = filterYoutube(data);
+            var pn = req.query.pn
+            if (pn) {
+                if (isGPApk(pn)) {
+                    isShowIcons = false;
+                }
             } else {
                 isShowIcons = true;
+            }
+            if (pn !== 'com.snaptube.premium') {
+                data = filterYoutube(data);
             }
             res.render('android/sites', {
                 $data: data,
@@ -52,7 +57,7 @@ module.exports = exports = {
             list = _.clone(list);
             _.each(list, function(g) {
                 _.each(g.sites, function(i, idx) {
-                    if (i.title.toLowerCase() == 'youtube') {
+                    if (i.title.toLowerCase() == 'youtube.com') {
                         g.sites.splice(idx, 1);
                     }
                 });

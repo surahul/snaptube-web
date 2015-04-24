@@ -9,3 +9,7 @@ def deploy_web():
 @hosts(web_servers)
 def toggle_icon():
     run('curl http://localhost:3000/_sites-page/toggle-icon')
+
+@hosts(web_servers)
+def del_cache():
+    run('curl http://localhost:3000/_sites-page/_delcache')
