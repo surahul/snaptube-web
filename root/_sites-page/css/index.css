@@ -211,6 +211,10 @@ h2 {
   color: #e8473c;
   font-size: 12px;
 }
+.x-site-new .x-warn-msg {
+  padding: 10px;
+  background: #FFE0AD;
+}
 .x-success-wrap {
   margin: 25px 40px;
   text-align: center;

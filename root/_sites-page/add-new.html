@@ -13,16 +13,25 @@
         placeholder="Please input URL here" name="url">
       <p class="x-error-msg"></p>
       <input type="submit" value="Submit" class="submit-field">
+      <p class="x-warn-msg" style="display: none;">
+        Sorry. Accroding to Google’s Policy, SnapTube Lite Do Not support Youtube download. You can try SnapTube full version instead.
+      </p>
     </form>
 
     <script type="text/javascript">
     var $input = document.getElementById('url-field');
     var $errText = document.querySelector('.x-error-msg');
+    var $warnText = document.querySelector('.x-warn-msg');
     var regex = new RegExp("^(http[s]?:\\/\\/(www\\.)?|ftp:\\/\\/(www\\.)?|www\\.){1}([0-9A-Za-z-\\.@:%_\+~#=]+)+((\\.[a-zA-Z]{2,3})+)(/(.)*)?(\\?(.)*)?");
     document.querySelector('.submit-field').addEventListener('click', function(e) {
-        if (regex.test($input.value)) {
-          $errText.innerHTML = '';
-        } else {
+        $warnText.style.display = 'none';
+        $errText.innerHTML = '';
+        if(/youtube\.com/.test($input.value.toLowerCase())) {
+            e.preventDefault();
+            $warnText.style.display = 'block';
+            return;
+        }
+        if (!regex.test($input.value)) {
           e.preventDefault();
           $errText.innerHTML = 'Please use correct url format';
         }
