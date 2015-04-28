@@ -7,7 +7,7 @@
   </head>
   <body class="x-site-new">
     <h1>Report Video Site</h1>
-    <p>If you want snaptube to support more download sites, please tell us the URL of the site here:</p>
+    <p>If you want us to support more download sites, please tell us the URL of the site here:</p>
     <form action="/_sites-page/new" method="POST">
       <input class="input-field" required id="url-field"
         placeholder="Please input URL here" name="url">
@@ -22,7 +22,8 @@
     var $input = document.getElementById('url-field');
     var $errText = document.querySelector('.x-error-msg');
     var $warnText = document.querySelector('.x-warn-msg');
-    var regex = new RegExp("^(http[s]?:\\/\\/(www\\.)?|ftp:\\/\\/(www\\.)?|www\\.){1}([0-9A-Za-z-\\.@:%_\+~#=]+)+((\\.[a-zA-Z]{2,3})+)(/(.)*)?(\\?(.)*)?");
+    var _regex = /[-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?/gi;
+    var regex = new RegExp(_regex);
     document.querySelector('.submit-field').addEventListener('click', function(e) {
         $warnText.style.display = 'none';
         $errText.innerHTML = '';
