@@ -179,14 +179,14 @@ header > nav > a.twitter {
 
 #hero > .slides i {
   display: inline-block;
-  background-image: url('../images/snaptube.png?1418319838');
+  background-image: url('../images/snaptube2.0.png');
   width: 286px;
   height: 470px;
 }
 @media (-webkit-min-device-pixel-ratio: 2), (-o-min-device-pixel-ratio: 3 / 2), (min-device-pixel-ratio: 2) {
 
   #hero > .slides i {
-    background-image: url('../images/snaptube@2x.png?1418319838');
+    background-image: url('../images/snaptube2.0@2x.png');
     background-size: 286px 470px;
   }
 }
