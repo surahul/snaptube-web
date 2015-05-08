@@ -9,7 +9,7 @@ var sendMail = (function() {
     var transporter = nodemailer.createTransport();
     var baseMailObj = {
         from: 'robot@snaptube.in',
-        to: 'gaohailang@wandoujia.com, liujiao@wandoujia.com',
+        to: 'gaohailang@wandoujia.com, liujiao@wandoujia.com, wanzheng@wandoujia.com, xiebingying@wandoujia.com, hello@snaptube.in',
         subject: '[Daily] - video site submit'
     };
 
@@ -83,7 +83,7 @@ module.exports = exports = {
             return 'intent://' + hostpath + '#Intent;scheme=' + scheme + ';action=android.intent.action.VIEW;package=_package.local;end';
         }
 
-        if (cache.get(CACHEKEY)) {
+        if (cache.get(CACHEKEY) && !req.query.debug) {
             render(cache.get(CACHEKEY));
         } else {
             request.get('http://www.wandoujia.com/needle/source/getJSON/59', function(err, resp, body) {
@@ -93,7 +93,9 @@ module.exports = exports = {
                     _.each(i.sites, function(ii) {
                         ii.icon = ii.icon.split('.png')[0] + '@2x.png';
                         ii.icon = ii.icon.replace('images', 'image');
-                        ii.url = buildIntentUri(ii.url);
+                        if(!req.query.debug) {
+                            ii.url = buildIntentUri(ii.url);
+                        }
                     });
                 });
 

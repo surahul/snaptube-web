@@ -3,7 +3,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
     <title>Snaptube Sites - Mobile</title>
-    <link href="/_sites-page/css/index.css" rel="stylesheet">
+    <link href="{{'root/_sites-page/css/index.css'|datauri}}" rel="stylesheet">
   </head>
   <body class="x-sites-list">
     {% for group in $data %}
@@ -31,7 +31,7 @@
     {% endfor %}
     <p class="x-addmore-wrap">
       <a href="intent://www.snaptube.in/_sites-page/add-new.html#Intent;scheme=http;action=android.intent.action.VIEW;package=_package.local;end">
-        <i class="icon-plus"></i>
+        <!-- <i class="icon-plus"></i> -->
         Want More Video Sites?
       </a>
     </p>

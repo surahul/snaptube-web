@@ -1,5 +1,10 @@
 var swig = require('swig');
 var timeAgo = require('./timeAgo');
+var Datauri = require('datauri');
+
+swig.setFilter('datauri', function(src) {
+    return Datauri(src);
+});
 
 swig.setFilter('lessThan', function(str, len, sub) {
     if (str.length > len) {
