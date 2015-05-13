@@ -1,0 +1,13 @@
+#HeaderContainer {
+    min-width: initial!important;
+}
+#HeaderContainer #Search {
+    display: none;
+}
+.tabcontent {
+    padding: 15px 10px 0;
+}
+.Mobile .ChannelThumb {
+    margin: 0 10px 10px 0;
+    padding: 3px 10px;
+}

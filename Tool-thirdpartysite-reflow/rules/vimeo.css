@@ -1,0 +1,16 @@
+.jumbo {
+    display: none;
+}
+.player .rounded-box.snaptube-download-btn {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAQAAAD9CzEMAAABDklEQVRYw+2VTQ7BQBhAP0q1rNhyAHEBcQZxBYlLiFOIQ4hD4ATiBGLNmlU3zbOTiA7zJyX6um3eW8x834h8B5QoE1ChSkiNiJg6DX96FeHPB6pFIPdApQjkHgiKQO6BchHIPVD6uwCh4lNRy/5fHVjgg4U6ELB11m9ezjctjk76I61359Djaq2/0tM56hGplT5lpHubZlaBmcmFXRnrV2YTEbM30u+JTYeuw1lbf6ZjsyAGJFr6hIHtDppoBSYua27+Vj9326MB65f6tfPDT5ODUn+g6eM16HLJ1F/o+npwhhnLI2Uo/mD6FJiKX1g+6JfiGyJ2d/2OSPxDmxMAJ9ryGeiTkNCXz8GYsfwZN9+IfIGBL1sSAAAAAElFTkSuQmCC')!important;
+    background-size: 24px 24px;
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+
+    width: 6.5em;
+    height: 4em;
+    margin-right: .9em;
+    color: #fff;
+    -webkit-transition: opacity 250ms ease-out,background-color 40ms,color 40ms;
+    transition: opacity 250ms ease-out,background-color 40ms,color 40ms;
+}

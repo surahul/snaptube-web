@@ -1,0 +1,16 @@
+{
+  "name": "nw-demo",
+  "main": "index.html",
+  "version": "0.0.0",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "sivagao <sivagao@126.com> (http://weibo.com/1siva)",
+  "license": "ISC",
+  "user-agent": "Mozilla/5.0 (Linux; Android 4.2.1; en-us; Nexus 5 Build/JOP40D) AppleWebKit/535.19 (KHTML, like Gecko) Chrome/18.0.1025.166 Mobile Safari/535.19",
+  "chromium-args": "--enable-touch-events --enable-pinch",
+  "dependencies": {
+    "css-loader": "^0.9.1",
+    "style-loader": "^0.9.0"
+  }
+}

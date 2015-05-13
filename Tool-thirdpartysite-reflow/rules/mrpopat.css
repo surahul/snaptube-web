@@ -1,0 +1,9 @@
+.standard_menu {
+    display: none;
+}
+.middle-main-div > * {
+    display: none;
+}
+.middle_main_div {
+    display: block;
+}
