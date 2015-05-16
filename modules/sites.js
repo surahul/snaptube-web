@@ -39,12 +39,13 @@ module.exports = exports = {
         function render(list) {
             var data = _.cloneDeep(list);
             var pn = req.query.pn || '';
+            var isPremium = req.query.isPremium || false;
             /*if (pn && isGPApk(pn)) {
                 isShowIcons = false;
             } else {
                 isShowIcons = true;
             }*/
-            if (pn === 'com.snaptube.premium') {
+            if (pn === 'com.snaptube.premium' || isPremium) {
                 isShowIcons = true;
             } else {
                 data = filterYoutube(data);
