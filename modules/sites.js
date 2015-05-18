@@ -9,7 +9,7 @@ var sendMail = (function() {
     var transporter = nodemailer.createTransport();
     var baseMailObj = {
         from: 'robot@snaptube.in',
-        to: 'gaohailang@wandoujia.com, liujiao@wandoujia.com, wanzheng@wandoujia.com, xiebingying@wandoujia.com, hello@snaptube.in',
+        to: 'wanzheng@wandoujia.com, xiebingying@wandoujia.com, hello@snaptube.in',
         subject: '[Daily] - video site submit'
     };
 
