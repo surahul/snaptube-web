@@ -20,7 +20,5 @@ def fetch_feedback():
     out = run('cd ~/projects/snaptube-web && cat webapp.log |grep "user feedback"')
     for line in out.split('\n'):
         feed = json.loads(line)
-        # feed['hostname']
-        # feed['req']['x-real-ip']
         print '[SITE]' + feed['text'].split('feedback:')[1] +'\t'+ feed['req']['headers']['x-real-ip']
 
